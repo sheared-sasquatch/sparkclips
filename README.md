@@ -14,3 +14,30 @@ Guys don’t know what they want, what looks good (for them), or what hairstyles
  * There are a lot of hairstyles.
   * The hairstyle may look good at the barber, but difficult to style at home. 
   * Not all hairstyles suit you. 
+### Team Members
+
++ Derry Cheng
++ Luis Naranjo
++ Nathan Swanson
++ Kyle Williams-Smith
+
+### Roles
+
+Product Management 
++ Nathan 
+
+Marketing
++ Luis 
++ Nathan
+
+Design
++ Kyle 
++ Nathan
+
+Engineering
++ Derry
++ Luis
+
+Support
++ Derry
++ Kyle
