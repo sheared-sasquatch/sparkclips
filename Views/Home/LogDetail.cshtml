@@ -1,0 +1,11 @@
+@model sparkclips.Models.LogEntry
+@{
+    ViewData["Title"] = "My haircut log";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/log.css" />
+}
+<h2>@ViewData["Title"].</h2>
+
+<h3>@Html.DisplayFor(model => model.BarberShop)</h3>
+

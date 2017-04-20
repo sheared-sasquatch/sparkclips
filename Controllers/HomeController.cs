@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using sparkclips.Models;
 
 namespace sparkclips.Controllers
 {
@@ -24,7 +25,12 @@ namespace sparkclips.Controllers
 
         public IActionResult Log()
         {
-            return View();
+            return View(LogEntry.GetFakeData());
+        }
+
+        public IActionResult LogDetail(int ID) {
+            LogEntry logEntry = LogEntry.GetFakeData().First(item => item.ID == ID);
+            return View(logEntry);
         }
 
         public IActionResult Error()
