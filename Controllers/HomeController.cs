@@ -13,17 +13,17 @@ namespace sparkclips.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
+        public IActionResult Knowledge() {
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Gallery()
         {
-            ViewData["Message"] = "Your contact page.";
+            return View();
+        }
 
+        public IActionResult Log()
+        {
             return View();
         }
 
