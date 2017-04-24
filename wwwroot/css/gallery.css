@@ -1,0 +1,46 @@
+/*
+   gallery.css
+   April 23, 2017
+   contributors: Kyle, Luis
+*/
+
+body {
+   background-color: burlywood;
+   margin:0;
+   padding:0;
+}
+
+h1 {
+   border-bottom: 3px solid brown;
+   text-align: center;
+}
+
+#content {
+   display: flex;
+   justify-content: center;
+}
+
+img {
+   width: 300px;
+   height: 300px;
+}
+
+.hair-frame:nth-child(2n) {
+   text-align: right;
+}
+
+main {
+   width: 50%;
+   
+}
+
+aside {
+   flex-basis: 0;
+   background-color: cadetblue;
+}
+
+/* All mobile styles go above without media rule */
+/* Styles below are for eveything NOT mobile (desktop) */ 
+@media (min-width: 500px) {
+
+}
