@@ -4,11 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using sparkclips.Models;
+using sparkclips.Blob;
 
 namespace sparkclips.Controllers
 {
     public class HomeController : Controller
     {
+        private IBlobBob _blobBob;
+
+        public HomeController(IBlobBob blobBob)
+        {
+            _blobBob = blobBob;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -18,9 +26,10 @@ namespace sparkclips.Controllers
             return View();
         }
 
-        public IActionResult Gallery()
+        public async Task<IActionResult> Gallery()
         {
-            return View();
+            List<Image> images = await _blobBob.FetchGalleryImages();
+            return View(images);
         }
 
         public IActionResult Log()

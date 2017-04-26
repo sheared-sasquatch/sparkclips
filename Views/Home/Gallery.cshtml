@@ -1,11 +1,20 @@
-﻿@{
+﻿@model IEnumerable<sparkclips.Models.Image>
+
+@{
     ViewData["Title"] = "Gallery";
 }
-
 @section Styles {
     <link rel="stylesheet" href="~/css/gallery.css" />
 }
-
-
 <h2>@ViewData["Title"].</h2>
-<h3>This is where gallery stuff goes</h3>
+
+
+
+        <div class="list-group">
+            @foreach (var item in Model)
+            {
+                <img src="@Html.DisplayFor(modelItem => item.Url)" />
+            }
+        </div>
+
+ 
