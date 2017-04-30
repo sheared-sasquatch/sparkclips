@@ -13,7 +13,7 @@ namespace SparkClips.Models.HairyDatabase
         public string Url { get; set; }
         // public Container Container { get; set; }
 
-        public List<GalleryEntry> GalleryEntries { get; set; } // Collection navigation property
+        public List<GalleryEntry_Image> GalleryEntryImages { get; set; } // Collection navigation property
     }
 
     public class GalleryEntry
@@ -24,7 +24,7 @@ namespace SparkClips.Models.HairyDatabase
         public int Upvotes { get; set; }
         public int Downvotes { get; set; }
 
-        public List<Image> Images { get; set; } // Collection navigation property
+        public List<GalleryEntry_Image> GalleryEntryImages { get; set; } // Collection navigation property
     }
 
     /// <summary>
