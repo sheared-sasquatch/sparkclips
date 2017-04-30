@@ -13,17 +13,18 @@ namespace SparkClips.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Knowledge()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Gallery()
         {
-            ViewData["Message"] = "Your contact page.";
+            return View();
+        }
 
+        public IActionResult Log()
+        {
             return View();
         }
 

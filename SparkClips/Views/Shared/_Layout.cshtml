@@ -16,6 +16,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    @RenderSection("Styles", false)
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
@@ -33,8 +34,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Knowledge">Need to Know</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Log">Log</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
