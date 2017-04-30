@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using SparkClips.Models.HairyDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,9 +39,9 @@ namespace SparkClips.Services.BlobBob
         /// Container is an enum.</param>
         /// <param name="formFile">The FormFile object which contains the byte data and meta-data
         /// for the file being uploaded.</param>
-        /// <returns>A StoredFile object which contains the guid filename given to the blob in blob storage.
+        /// <returns>A Image object which contains the guid filename given to the blob in blob storage.
         /// This object also contains the URL that you can use to access the blob file from online.</returns>
-        public async Task<StoredFile> UploadImage(ContainerName container, FormFile formFile)
+        public async Task<Image> UploadImage(ContainerName container, FormFile formFile)
         {
             Guid blobName = Guid.NewGuid(); // generate a random guid to use as the new blob's unique name
             CloudBlockBlob blockBlob;
@@ -62,13 +63,13 @@ namespace SparkClips.Services.BlobBob
             // Create or overwrite the blob with the contents of formFile stream
             await blockBlob.UploadFromStreamAsync(formFile.OpenReadStream());
 
-            StoredFile storedFile = new StoredFile
+            Image image = new Image
             {
                 Url = blockBlob.StorageUri.PrimaryUri.ToString(),
                 Guid = blobName
             };
 
-            return storedFile;
+            return image;
         }
 
     }

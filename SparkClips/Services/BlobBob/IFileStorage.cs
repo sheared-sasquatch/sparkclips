@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.Internal;
+using SparkClips.Models.HairyDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace SparkClips.Services.BlobBob
 {
     public interface IFileStorage
     {
-        Task<StoredFile> UploadImage(ContainerName container, FormFile formFile);
+        Task<Image> UploadImage(ContainerName container, FormFile formFile);
     }
 
     public enum ContainerName
