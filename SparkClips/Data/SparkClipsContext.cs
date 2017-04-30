@@ -31,5 +31,7 @@ namespace SparkClips.Data
                 .WithMany(i => i.GalleryEntryImages)
                 .HasForeignKey(gei => gei.ImageID);
         }
+
+        public DbSet<SparkClips.Models.HairyDatabase.GalleryEntry_Image> GalleryEntry_Image { get; set; }
     }
 }
