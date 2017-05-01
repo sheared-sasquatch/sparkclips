@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
+using SparkClips.Data;
 using SparkClips.Models.HairyDatabase;
 using SparkClips.Services.BlobBob;
 using System;
@@ -15,10 +16,12 @@ namespace sparkclips.Controllers
     public class UploadFilesController : Controller
     {
         private IFileStorage _fileStorage;
+        private SparkClipsContext _sparkClipsContext;
 
-        public UploadFilesController(IFileStorage fileStorage)
+        public UploadFilesController(IFileStorage fileStorage, SparkClipsContext sparkClipsContext)
         {
             _fileStorage = fileStorage; // store a reference to the file storage object from ASP .NET's dependency injection container
+            _sparkClipsContext = sparkClipsContext;
         }
 
         /// <summary>
@@ -41,6 +44,9 @@ namespace sparkclips.Controllers
                     Image image = await _fileStorage.UploadImage(ContainerName.Gallery, formFile);
                     Debug.WriteLine(image.Url);
                     Debug.WriteLine(image.Guid);
+                    _sparkClipsContext.Images.Add(image);
+                    _sparkClipsContext.SaveChanges();
+                    Debug.WriteLine("ID: " + image.ImageID);
                 }
             }
 

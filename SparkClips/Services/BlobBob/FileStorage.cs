@@ -41,9 +41,27 @@ namespace SparkClips.Services.BlobBob
         /// for the file being uploaded.</param>
         /// <returns>A Image object which contains the guid filename given to the blob in blob storage.
         /// This object also contains the URL that you can use to access the blob file from online.</returns>
-        public async Task<Image> UploadImage(ContainerName container, FormFile formFile)
+        public async Task<Image> UploadImage(ContainerName container, FormFile formFile) {
+            Guid blobName = Guid.NewGuid();
+            return await UploadOrReplaceImage(container, formFile, blobName);
+        }
+
+        /// <summary>
+        /// Upload an image to blob storage
+        /// OR
+        /// Replace it if a file with the provided guid already exists
+        /// </summary>
+        /// <param name="container">The container to upload the blob to.
+        /// Container is an enum.</param>
+        /// <param name="formFile">The FormFile object which contains the byte data and meta-data
+        /// for the file being uploaded.</param>
+        /// <param name="blobName">The guid which will become the blob filename in azure storage.
+        /// </param>
+        /// <returns>A Image object which contains the guid filename given to the blob in blob storage.
+        /// This object also contains the URL that you can use to access the blob file from online.</returns>
+        public async Task<Image> UploadOrReplaceImage(ContainerName container, FormFile formFile, Guid blobName)
         {
-            Guid blobName = Guid.NewGuid(); // generate a random guid to use as the new blob's unique name
+
             CloudBlockBlob blockBlob;
             if (container == ContainerName.Gallery)
             { // check which container to upload the blob to
@@ -66,7 +84,8 @@ namespace SparkClips.Services.BlobBob
             Image image = new Image
             {
                 Url = blockBlob.StorageUri.PrimaryUri.ToString(),
-                Guid = blobName
+                Guid = blobName,
+                Filename = formFile.FileName
             };
 
             return image;

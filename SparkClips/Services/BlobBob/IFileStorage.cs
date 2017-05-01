@@ -10,6 +10,7 @@ namespace SparkClips.Services.BlobBob
     public interface IFileStorage
     {
         Task<Image> UploadImage(ContainerName container, FormFile formFile);
+        Task<Image> UploadOrReplaceImage(ContainerName container, FormFile formFile, Guid blobName);
     }
 
     public enum ContainerName

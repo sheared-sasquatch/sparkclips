@@ -11,7 +11,6 @@ namespace SparkClips.Models.HairyDatabase
         public string Filename { get; set; }
         public Guid Guid { get; set; }
         public string Url { get; set; }
-        // public Container Container { get; set; }
 
         public List<GalleryEntry_Image> GalleryEntryImages { get; set; } // Collection navigation property
     }
