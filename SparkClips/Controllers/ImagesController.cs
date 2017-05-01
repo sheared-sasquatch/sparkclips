@@ -22,8 +22,7 @@ namespace SparkClips.Controllers
         // GET: Images
         public async Task<IActionResult> Index()
         {
-            List<Image> images = await _context.Images.ToListAsync();
-            return View(images);
+            return View(await _context.Images.ToListAsync());
         }
 
         // GET: Images/Details/5
@@ -55,7 +54,7 @@ namespace SparkClips.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ImageID,Filename,Guid,Url")] Image image)
+        public async Task<IActionResult> Create([Bind("ImageID,Filename,Guid,Url,ContainerName")] Image image)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +86,7 @@ namespace SparkClips.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ImageID,Filename,Guid,Url")] Image image)
+        public async Task<IActionResult> Edit(int id, [Bind("ImageID,Filename,Guid,Url,ContainerName")] Image image)
         {
             if (id != image.ImageID)
             {
