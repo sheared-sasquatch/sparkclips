@@ -9,9 +9,10 @@ using SparkClips.Services.BlobBob;
 namespace SparkClips.Migrations
 {
     [DbContext(typeof(SparkClipsContext))]
-    partial class SparkClipsContextModelSnapshot : ModelSnapshot
+    [Migration("20170501020946_add container name to image")]
+    partial class addcontainernametoimage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

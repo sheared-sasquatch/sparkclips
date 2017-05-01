@@ -85,7 +85,8 @@ namespace SparkClips.Services.BlobBob
             {
                 Url = blockBlob.StorageUri.PrimaryUri.ToString(),
                 Guid = blobName,
-                Filename = formFile.FileName
+                Filename = formFile.FileName,
+                ContainerName = container
             };
 
             return image;

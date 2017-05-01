@@ -15,7 +15,7 @@ namespace SparkClips.Services.BlobBob
 
     public enum ContainerName
     {
-        Gallery,
         Log,
+        Gallery
     }
 }

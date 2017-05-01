@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SparkClips.Services.BlobBob;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace SparkClips.Models.HairyDatabase
         public string Filename { get; set; }
         public Guid Guid { get; set; }
         public string Url { get; set; }
+        public ContainerName ContainerName { get; set; }
 
         public List<GalleryEntry_Image> GalleryEntryImages { get; set; } // Collection navigation property
     }
