@@ -32,6 +32,7 @@ namespace SparkClips.Data
                 .HasForeignKey(gei => gei.ImageID);
         }
 
+        // I'm not totally sure that this line should be here
         public DbSet<SparkClips.Models.HairyDatabase.GalleryEntry_Image> GalleryEntry_Image { get; set; }
     }
 }
