@@ -40,6 +40,7 @@ namespace SparkClips
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection_string = Configuration.GetConnectionString("DefaultConnection");
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -78,6 +79,7 @@ namespace SparkClips
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
             services.AddTransient<IFileStorage, FileStorage>();
         }
 
@@ -87,7 +89,7 @@ namespace SparkClips
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || true)
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
