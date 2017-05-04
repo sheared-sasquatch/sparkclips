@@ -1,0 +1,37 @@
+﻿@model SparkClips.Models.HairyDatabase.GalleryEntry
+@{
+    ViewData["Title"] = "Gallery detail";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/gallery-detail.css" />
+}
+
+
+<h2>@Html.DisplayFor(model => model.Title)</h2>
+
+@foreach (var image in Model.Images)
+{
+    <img src="@Html.DisplayFor(x =>image.Image.Url)" />
+}
+
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Tags)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Tags)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Instructions)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Instructions)
+    </dd>
+</dl>

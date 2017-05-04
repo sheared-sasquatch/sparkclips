@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<SparkClips.Models.HairyDatabase.GalleryEntry>
 @{
     ViewData["Title"] = "Gallery";
 }
@@ -8,9 +8,21 @@
 <h2>@ViewData["Title"].</h2>
 
 
+<div class="row">
+
+
+    <div class="col-md-4">
 
         <div class="list-group">
-            <p>stuff</p>
+            @foreach (var item in Model)
+            {
+                <a asp-action="GalleryDetail" asp-route-id="@item.GalleryEntryID" class="list-group-item">@Html.DisplayFor(modelItem => item.Title)</a>
+            }
         </div>
 
- 
+    </div>
+    <div class="col-md-8 hidden-xs">
+        Details
+    </div>
+
+</div>

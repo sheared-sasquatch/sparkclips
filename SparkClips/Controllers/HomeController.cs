@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SparkClips.Data;
 using SparkClips.Models.HairyDatabase;
+using Microsoft.EntityFrameworkCore;
 
 namespace SparkClips.Controllers
 {
@@ -27,24 +28,32 @@ namespace SparkClips.Controllers
             return View();
         }
 
-        public IActionResult Gallery()
+        public async Task<IActionResult> Gallery()
         {
-            List<GalleryEntry> galleryEntries = _sparkClipsContext.GalleryEntries.ToList();
-            List<Image> images = new List<Image>();
-            foreach(GalleryEntry galleryEntry in galleryEntries)
-            {
-                IEnumerable<int> image_ids = _sparkClipsContext.GalleryEntry_Image
-                    .Where(x => x.GalleryEntryID == galleryEntry.GalleryEntryID)
-                    .ToList()
-                    .Select(x => x.ImageID);
+            List<GalleryEntry> galleryEntries = await _sparkClipsContext.GalleryEntries
+                .Include(galleryEntry => galleryEntry.Images) // https://docs.microsoft.com/en-us/ef/core/querying/related-data#eager-loading
+                    .ThenInclude(image => image.Image)
+                .ToListAsync();
 
-                foreach(int pk in image_ids)
-                {
-                    Image image = _sparkClipsContext.Images.Single(i => i.ImageID == pk);
-                    images.Add(image);
-                }
+
+            return View(galleryEntries);
+        }
+
+        public async Task<IActionResult> GalleryDetail(int ID)
+        {
+            GalleryEntry galleryEntry = await _sparkClipsContext.GalleryEntries
+                .Include(ge => ge.Images)
+                    .ThenInclude(image => image.Image)
+                .Include(ge => ge.Tags)
+                    .ThenInclude(tag => tag.Tag)
+                .SingleOrDefaultAsync(g => g.GalleryEntryID == ID);
+
+            if (galleryEntry == null)
+            {
+                return NotFound();
             }
-            return View();
+
+            return View(galleryEntry);
         }
 
         public IActionResult Log()

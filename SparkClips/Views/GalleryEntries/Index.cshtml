@@ -16,13 +16,10 @@
                     @Html.DisplayNameFor(model => model.Title)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Body)
+                    @Html.DisplayNameFor(model => model.Description)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Upvotes)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Downvotes)
+                    @Html.DisplayNameFor(model => model.Instructions)
                 </th>
             <th></th>
         </tr>
@@ -34,13 +31,10 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Body)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Upvotes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Downvotes)
+                @Html.DisplayFor(modelItem => item.Instructions)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.GalleryEntryID">Edit</a> |
