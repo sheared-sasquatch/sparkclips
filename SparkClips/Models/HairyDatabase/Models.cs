@@ -21,11 +21,15 @@ namespace SparkClips.Models.HairyDatabase
     {
         public int GalleryEntryID { get; set; }
         public string Title { get; set; }
-        public string Body { get; set; }
-        public int Upvotes { get; set; }
-        public int Downvotes { get; set; }
+        public string Description { get; set; }
+        public string Instructions { get; set; }
+        // TODO: Add a computed column for nLikes
+
+        //public int Upvotes { get; set; }
+        //public int Downvotes { get; set; }
 
         public List<GalleryEntry_Image> GalleryEntryImages { get; set; } // Collection navigation property
+        public List<GalleryEntry_Tag> GalleryEntryTags { get; set; }
     }
 
     /// <summary>
@@ -34,10 +38,57 @@ namespace SparkClips.Models.HairyDatabase
     /// </summary>
     public class GalleryEntry_Image
     {
+        public int GalleryEntryID { get; set; }
+        public GalleryEntry GalleryEntry { get; set; }
+
         public int ImageID { get; set; }
         public Image Image { get; set; }
 
+
+    }
+
+    public class Tag
+    {
+        public int TagID { get; set; }
+        public string Name { get; set; }
+
+        public List<GalleryEntry_Tag> GalleryEntryTags { get; set; }
+    }
+
+    public class GalleryEntry_Tag
+    {
         public int GalleryEntryID { get; set; }
         public GalleryEntry GalleryEntry { get; set; }
+
+        public int TagID { get; set; }
+        public Tag Tag { get; set; }
+    }
+
+    public class LogEntry
+    {
+        public int LogEntryID { get; set; }
+        public string Description { get; set; }
+        public double Cost { get; set; }
+        public DateTime Timestamp { get; set; }
+        public string Location { get; set; }
+        public string Barbers { get; set; }
+    }
+
+    public class LogEntry_Image
+    {
+        public int LogEntryID { get; set; }
+        public LogEntry LogEntry { get; set; }
+
+        public int ImageID { get; set; }
+        public Image Image { get; set; }
+    }
+    
+    public class GalleryEntry_ApplicationUser
+    {
+        public int GalleryEntryID { get; set; }
+        public GalleryEntry GalleryEntry { get; set; }
+
+        public int AspNetUserID { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

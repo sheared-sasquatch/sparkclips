@@ -9,9 +9,10 @@ using SparkClips.Services.BlobBob;
 namespace SparkClips.Migrations
 {
     [DbContext(typeof(SparkClipsContext))]
-    partial class SparkClipsContextModelSnapshot : ModelSnapshot
+    [Migration("20170503233928_initial half baked schema dump from meeting")]
+    partial class initialhalfbakedschemadumpfrommeeting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -46,19 +47,6 @@ namespace SparkClips.Migrations
                     b.ToTable("GalleryEntry_Image");
                 });
 
-            modelBuilder.Entity("SparkClips.Models.HairyDatabase.GalleryEntry_Tag", b =>
-                {
-                    b.Property<int>("TagID");
-
-                    b.Property<int>("GalleryEntryID");
-
-                    b.HasKey("TagID", "GalleryEntryID");
-
-                    b.HasIndex("GalleryEntryID");
-
-                    b.ToTable("GalleryEntry_Tag");
-                });
-
             modelBuilder.Entity("SparkClips.Models.HairyDatabase.Image", b =>
                 {
                     b.Property<int>("ImageID")
@@ -77,38 +65,6 @@ namespace SparkClips.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("SparkClips.Models.HairyDatabase.LogEntry", b =>
-                {
-                    b.Property<int>("LogEntryID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Barbers");
-
-                    b.Property<double>("Cost");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Location");
-
-                    b.Property<DateTime>("Timestamp");
-
-                    b.HasKey("LogEntryID");
-
-                    b.ToTable("LogEntries");
-                });
-
-            modelBuilder.Entity("SparkClips.Models.HairyDatabase.Tag", b =>
-                {
-                    b.Property<int>("TagID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("TagID");
-
-                    b.ToTable("Tags");
-                });
-
             modelBuilder.Entity("SparkClips.Models.HairyDatabase.GalleryEntry_Image", b =>
                 {
                     b.HasOne("SparkClips.Models.HairyDatabase.GalleryEntry", "GalleryEntry")
@@ -119,19 +75,6 @@ namespace SparkClips.Migrations
                     b.HasOne("SparkClips.Models.HairyDatabase.Image", "Image")
                         .WithMany("GalleryEntryImages")
                         .HasForeignKey("ImageID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SparkClips.Models.HairyDatabase.GalleryEntry_Tag", b =>
-                {
-                    b.HasOne("SparkClips.Models.HairyDatabase.GalleryEntry", "GalleryEntry")
-                        .WithMany("GalleryEntryTags")
-                        .HasForeignKey("GalleryEntryID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SparkClips.Models.HairyDatabase.Tag", "Tag")
-                        .WithMany("GalleryEntryTags")
-                        .HasForeignKey("TagID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }
