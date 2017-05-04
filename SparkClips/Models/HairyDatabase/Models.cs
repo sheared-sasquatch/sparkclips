@@ -1,6 +1,7 @@
 ﻿using SparkClips.Services.BlobBob;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,6 +32,7 @@ namespace SparkClips.Models.HairyDatabase
 
         public List<GalleryEntry_Image> GalleryEntryImages { get; set; } // Collection navigation property
         public List<GalleryEntry_Tag> GalleryEntryTags { get; set; }
+        public List<GalleryEntry_ApplicationUser> ApplicationUsers { get; set; }
     }
 
     /// <summary>
@@ -91,7 +93,7 @@ namespace SparkClips.Models.HairyDatabase
         public int GalleryEntryID { get; set; }
         public GalleryEntry GalleryEntry { get; set; }
 
-        public int AspNetUserID { get; set; }
+        public string ApplicationUserID { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
     }
 }

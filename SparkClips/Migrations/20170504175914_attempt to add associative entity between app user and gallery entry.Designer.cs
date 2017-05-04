@@ -9,9 +9,10 @@ using SparkClips.Services.BlobBob;
 namespace SparkClips.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170504175914_attempt to add associative entity between app user and gallery entry")]
+    partial class attempttoaddassociativeentitybetweenappuserandgalleryentry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

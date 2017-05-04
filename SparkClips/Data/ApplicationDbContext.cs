@@ -25,7 +25,7 @@ namespace SparkClips.Data
         public DbSet<GalleryEntry_Image> GalleryEntry_Image { get; set; }
         public DbSet<GalleryEntry_Tag> GalleryEntry_Tag { get; set; }
         public DbSet<LogEntry_Image> LogEntry_Image { get; set; }
-        //public DbSet<GalleryEntry_ApplicationUser> GalleryEntry_ApplicationUser { get; set; }
+        public DbSet<GalleryEntry_ApplicationUser> GalleryEntry_ApplicationUser { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -77,6 +77,20 @@ namespace SparkClips.Data
                 .HasOne(lei => lei.Image)
                 .WithMany(i => i.LogEntries)
                 .HasForeignKey(lei => lei.ImageID);
+
+            // Configure GalleryEntry_Tag
+            modelBuilder.Entity<GalleryEntry_ApplicationUser>()
+                .HasKey(t => new { t.GalleryEntryID, t.ApplicationUserID });
+
+            modelBuilder.Entity<GalleryEntry_ApplicationUser>()
+                .HasOne(get => get.GalleryEntry)
+                .WithMany(ge => ge.ApplicationUsers)
+                .HasForeignKey(get => get.GalleryEntryID);
+
+            modelBuilder.Entity<GalleryEntry_ApplicationUser>()
+                .HasOne(get => get.ApplicationUser)
+                .WithMany(au => au.GalleryEntries)
+                .HasForeignKey(get => get.ApplicationUserID);
         }
     }
 }
