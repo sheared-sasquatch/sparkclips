@@ -15,6 +15,7 @@ namespace SparkClips.Models.HairyDatabase
         public ContainerName ContainerName { get; set; }
 
         public List<GalleryEntry_Image> GalleryEntryImages { get; set; } // Collection navigation property
+        public List<LogEntry_Image> LogEntries { get; set; }
     }
 
     public class GalleryEntry
@@ -72,6 +73,8 @@ namespace SparkClips.Models.HairyDatabase
         public DateTime Timestamp { get; set; }
         public string Location { get; set; }
         public string Barbers { get; set; }
+
+        public List<LogEntry_Image> Images { get; set; }
     }
 
     public class LogEntry_Image

@@ -48,12 +48,26 @@ namespace SparkClips.Data
                   .HasOne(get => get.Tag)
                   .WithMany(ge => ge.GalleryEntryTags)
                   .HasForeignKey(get => get.TagID);
+
+            // Configure LogEntry_Image
+            modelBuilder.Entity<LogEntry_Image>()
+                .HasKey(t => new { t.LogEntryID, t.ImageID });
+
+            modelBuilder.Entity<LogEntry_Image>()
+                .HasOne(lei => lei.LogEntry)
+                .WithMany(le => le.Images)
+                .HasForeignKey(lei => lei.LogEntryID);
+
+            modelBuilder.Entity<LogEntry_Image>()
+                .HasOne(lei => lei.Image)
+                .WithMany(i => i.LogEntries)
+                .HasForeignKey(lei => lei.ImageID);
         }
 
         // I'm not totally sure that this line should be here
         public DbSet<GalleryEntry_Image> GalleryEntry_Image { get; set; }
         public DbSet<GalleryEntry_Tag> GalleryEntry_Tag { get; set; }
-        //public DbSet<LogEntry_Image> LogEntry_Image { get; set; }
+        public DbSet<LogEntry_Image> LogEntry_Image { get; set; }
         //public DbSet<GalleryEntry_ApplicationUser> GalleryEntry_ApplicationUser { get; set; }
     }
 }

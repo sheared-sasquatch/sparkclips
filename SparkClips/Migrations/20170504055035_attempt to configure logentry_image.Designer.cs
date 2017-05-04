@@ -9,9 +9,10 @@ using SparkClips.Services.BlobBob;
 namespace SparkClips.Migrations
 {
     [DbContext(typeof(SparkClipsContext))]
-    partial class SparkClipsContextModelSnapshot : ModelSnapshot
+    [Migration("20170504055035_attempt to configure logentry_image")]
+    partial class attempttoconfigurelogentry_image
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
