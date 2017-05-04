@@ -42,12 +42,12 @@ namespace SparkClips.Data
 
             modelBuilder.Entity<GalleryEntry_Image>()
                 .HasOne(gei => gei.GalleryEntry)
-                .WithMany(ge => ge.GalleryEntryImages)
+                .WithMany(ge => ge.Images)
                 .HasForeignKey(gei => gei.GalleryEntryID);
 
             modelBuilder.Entity<GalleryEntry_Image>()
                 .HasOne(gei => gei.Image)
-                .WithMany(i => i.GalleryEntryImages)
+                .WithMany(i => i.GalleryEntries)
                 .HasForeignKey(gei => gei.ImageID);
 
             // Configure GalleryEntry_Tag
@@ -56,12 +56,12 @@ namespace SparkClips.Data
 
             modelBuilder.Entity<GalleryEntry_Tag>()
                 .HasOne(get => get.GalleryEntry)
-                .WithMany(ge => ge.GalleryEntryTags)
+                .WithMany(ge => ge.Tags)
                 .HasForeignKey(get => get.GalleryEntryID);
 
             modelBuilder.Entity<GalleryEntry_Tag>()
                   .HasOne(get => get.Tag)
-                  .WithMany(ge => ge.GalleryEntryTags)
+                  .WithMany(ge => ge.GalleryEntries)
                   .HasForeignKey(get => get.TagID);
 
             // Configure LogEntry_Image
