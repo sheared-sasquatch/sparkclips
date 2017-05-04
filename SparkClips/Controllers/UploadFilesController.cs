@@ -16,9 +16,9 @@ namespace sparkclips.Controllers
     public class UploadFilesController : Controller
     {
         private IFileStorage _fileStorage;
-        private SparkClipsContext _sparkClipsContext;
+        private ApplicationDbContext _sparkClipsContext;
 
-        public UploadFilesController(IFileStorage fileStorage, SparkClipsContext sparkClipsContext)
+        public UploadFilesController(IFileStorage fileStorage, ApplicationDbContext sparkClipsContext)
         {
             _fileStorage = fileStorage; // store a reference to the file storage object from ASP .NET's dependency injection container
             _sparkClipsContext = sparkClipsContext;

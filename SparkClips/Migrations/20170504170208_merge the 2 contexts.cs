@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace SparkClips.Data.Migrations
+namespace SparkClips.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class mergethe2contexts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,6 +46,7 @@ namespace SparkClips.Data.Migrations
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
+                    HairColor = table.Column<string>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
@@ -62,6 +61,67 @@ namespace SparkClips.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GalleryEntries",
+                columns: table => new
+                {
+                    GalleryEntryID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    Instructions = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GalleryEntries", x => x.GalleryEntryID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    ImageID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ContainerName = table.Column<int>(nullable: false),
+                    Filename = table.Column<string>(nullable: true),
+                    Guid = table.Column<Guid>(nullable: false),
+                    Url = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.ImageID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LogEntries",
+                columns: table => new
+                {
+                    LogEntryID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Barbers = table.Column<string>(nullable: true),
+                    Cost = table.Column<double>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    Timestamp = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogEntries", x => x.LogEntryID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    TagID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.TagID);
                 });
 
             migrationBuilder.CreateTable(
@@ -150,10 +210,83 @@ namespace SparkClips.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "GalleryEntry_Image",
+                columns: table => new
+                {
+                    ImageID = table.Column<int>(nullable: false),
+                    GalleryEntryID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GalleryEntry_Image", x => new { x.ImageID, x.GalleryEntryID });
+                    table.ForeignKey(
+                        name: "FK_GalleryEntry_Image_GalleryEntries_GalleryEntryID",
+                        column: x => x.GalleryEntryID,
+                        principalTable: "GalleryEntries",
+                        principalColumn: "GalleryEntryID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GalleryEntry_Image_Images_ImageID",
+                        column: x => x.ImageID,
+                        principalTable: "Images",
+                        principalColumn: "ImageID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LogEntry_Image",
+                columns: table => new
+                {
+                    LogEntryID = table.Column<int>(nullable: false),
+                    ImageID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogEntry_Image", x => new { x.LogEntryID, x.ImageID });
+                    table.ForeignKey(
+                        name: "FK_LogEntry_Image_Images_ImageID",
+                        column: x => x.ImageID,
+                        principalTable: "Images",
+                        principalColumn: "ImageID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LogEntry_Image_LogEntries_LogEntryID",
+                        column: x => x.LogEntryID,
+                        principalTable: "LogEntries",
+                        principalColumn: "LogEntryID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GalleryEntry_Tag",
+                columns: table => new
+                {
+                    TagID = table.Column<int>(nullable: false),
+                    GalleryEntryID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GalleryEntry_Tag", x => new { x.TagID, x.GalleryEntryID });
+                    table.ForeignKey(
+                        name: "FK_GalleryEntry_Tag_GalleryEntries_GalleryEntryID",
+                        column: x => x.GalleryEntryID,
+                        principalTable: "GalleryEntries",
+                        principalColumn: "GalleryEntryID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GalleryEntry_Tag_Tags_TagID",
+                        column: x => x.TagID,
+                        principalTable: "Tags",
+                        principalColumn: "TagID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
-                column: "NormalizedName");
+                column: "NormalizedName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -176,11 +309,6 @@ namespace SparkClips.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_UserId",
-                table: "AspNetUserRoles",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -190,6 +318,21 @@ namespace SparkClips.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GalleryEntry_Image_GalleryEntryID",
+                table: "GalleryEntry_Image",
+                column: "GalleryEntryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GalleryEntry_Tag_GalleryEntryID",
+                table: "GalleryEntry_Tag",
+                column: "GalleryEntryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LogEntry_Image_ImageID",
+                table: "LogEntry_Image",
+                column: "ImageID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,10 +353,31 @@ namespace SparkClips.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "GalleryEntry_Image");
+
+            migrationBuilder.DropTable(
+                name: "GalleryEntry_Tag");
+
+            migrationBuilder.DropTable(
+                name: "LogEntry_Image");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "GalleryEntries");
+
+            migrationBuilder.DropTable(
+                name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "Images");
+
+            migrationBuilder.DropTable(
+                name: "LogEntries");
         }
     }
 }

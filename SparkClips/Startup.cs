@@ -40,13 +40,13 @@ namespace SparkClips
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection_string = Configuration.GetConnectionString("RemoteConnection");
+            String connectionString = Configuration.GetConnectionString("DefaultConnection");
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("RemoteConnection")));
+                options.UseSqlServer(connectionString));
 
-            services.AddDbContext<SparkClipsContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("RemoteConnection")));
+            //services.AddDbContext<SparkClipsContext>(options =>
+            //   options.UseSqlServer(Configuration.GetConnectionString("RemoteConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -10,9 +10,9 @@ namespace SparkClips.Controllers
 {
     public class HomeController : Controller
     {
-        private SparkClipsContext _sparkClipsContext;
+        private ApplicationDbContext _sparkClipsContext;
 
-        public HomeController(SparkClipsContext sparkClipsContext)
+        public HomeController(ApplicationDbContext sparkClipsContext)
         {
             _sparkClipsContext = sparkClipsContext;
         }
