@@ -9,9 +9,6 @@
     <UserSecretsId>aspnet-SparkClips-f5221b6e-3e45-417e-be02-9c2196bda7a6</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="wwwroot\css\gallery - Copy.css">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
     <Content Include="wwwroot\css\gallery-detail.css" />
   </ItemGroup>
   <ItemGroup>
