@@ -35,6 +35,8 @@ namespace SparkClips.Controllers
                     .ThenInclude(image => image.Image)
                 .ToListAsync();
 
+            //GalleryEntry item = galleryEntries[0];
+            //var front = item.Images.First().Image;
 
             return View(galleryEntries);
         }
