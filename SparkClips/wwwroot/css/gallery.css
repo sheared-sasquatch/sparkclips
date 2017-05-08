@@ -1,0 +1,36 @@
+h2{
+    display:none;
+}
+.flex-row {
+    display: flex;
+    flex-wrap: wrap; /* wrap columns to next line if needed */
+}
+
+.flex-column {
+    flex-grow: 1;
+    flex-basis: 100%; /* columns take up whole line */
+    padding-bottom: 50px;
+}
+.card-img-top{
+    width: 100%;
+    object-fit: cover;
+    height: 280px;
+}
+.filters{
+    position: fixed;
+    left:80%;
+    top:50px;
+}
+/* rules for screens 480px and wider */
+@media (min-width: 490px) {
+    .flex-column {
+        flex-basis: 50%; /* columns take up half the line */
+    }
+}
+
+/* rules for screens 780px and wider */
+@media (min-width: 780px) {
+    .flex-column {
+        flex-basis: 33%;
+    }
+}
