@@ -35,8 +35,30 @@ namespace SparkClips.Controllers
                     .ThenInclude(image => image.Image)
                 .ToListAsync();
 
-            //GalleryEntry item = galleryEntries[0];
-            //var front = item.Images.First().Image;
+            // loop over each gallery entry and add any computed fields
+            foreach(GalleryEntry galleryEntry in galleryEntries)
+            {
+                // setting the thumbnail image
+                if (galleryEntry.Images.Count() == 0)
+                {
+                    // if this gallery entry has no images defined, return a random stock photo
+                    galleryEntry.Thumbnail = "https://unsplash.it/g/200/300/?random";
+                }
+                else
+                {
+                    // get first related entry in the associative many2many table
+                    GalleryEntry_Image firstImage = galleryEntry.Images.First();
+                    galleryEntry.Thumbnail = firstImage.Image.Url;
+                }
+
+                var likes = await _sparkClipsContext.GalleryEntry_ApplicationUser
+                    .Include(ge_au => ge_au.GalleryEntry)
+                    .Include(ge_au => ge_au.ApplicationUser)
+                    .Where(ge_au => ge_au.GalleryEntry == galleryEntry)
+                    .ToListAsync();
+
+                galleryEntry.Likes = likes.Count();
+            }
 
             return View(galleryEntries);
         }

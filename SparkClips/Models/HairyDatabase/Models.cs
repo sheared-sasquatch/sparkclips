@@ -31,39 +31,33 @@ namespace SparkClips.Models.HairyDatabase
         public string Title { get; set; }
         public string Description { get; set; }
         public string Instructions { get; set; }
-        // TODO: Add a computed column for nLikes
 
-        
-        /// <summary>
-        /// This is a getter method for retrieving a thumbnail URL for this gallery entry.
-        /// If this gallery entry has related images, this getter will arbitrarily return the first one
-        /// If this gallery entry doesn't have any related images yet, this getter will return a random grayscale
-        /// image URL from the unsplash.it placeholder image API (we can tweak this later)
-        /// 
-        /// You can use this read-only property on a GalleryEntry object as if it were a string field
-        /// Example: 
-        ///     string thumbnail = galleryEntry.GetThumbnail;
-        /// </summary>
-        public string GetThumbnail
-        {
-            get
-            {
-                if (this.Images.Count() == 0)
-                {
-                    // if this gallery entry has no images defined, return a random stock photo
-                    return "https://unsplash.it/g/200/300/?random";
-                } else
-                {
-                    // get first related entry in the associate many2many table or null
-                    GalleryEntry_Image firstImage = this.Images.FirstOrDefault(); 
-                    return firstImage.Image.Url;
-                }
-
-            }
-        }
         public List<GalleryEntry_Image> Images { get; set; } // Images for this gallery entry
         public List<GalleryEntry_Tag> Tags { get; set; } // Tags for this gallery entry
         public List<GalleryEntry_ApplicationUser> ApplicationUsers { get; set; } // Users that have favorited this gallery entry
+
+        /// <summary>
+        /// This field is excluded from the schema and is only being used to store the computed thumbnail
+        /// for specific gallery entries (the logic for setting this field should be in the controller).
+        /// 
+        /// After it is set, you can use this read-only property on a GalleryEntry object as if it were a string field
+        /// Example: 
+        ///     string thumbnail = galleryEntry.Thumbnail;
+        /// </summary>
+        [NotMapped]
+        public string Thumbnail { get; set; }
+
+        /// <summary>
+        /// This field is excluded from the schema and is only being used to store the number of
+        /// computed likes for specific gallery entries
+        /// The logic for setting this field should be in the controller.
+        /// 
+        /// After it is set, you can use this read-only property on a GalleryEntry object as if it were an int field
+        /// Example: 
+        ///     int nLikes = galleryEntry.Likes;
+        /// </summary>
+        [NotMapped]
+        public int Likes { get; set; }
     }
 
     /// <summary>

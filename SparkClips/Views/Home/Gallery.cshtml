@@ -16,11 +16,11 @@
             @foreach (var item in Model)
             {
                 <div class="flex-column card" style="width: 20rem;">
-                    <img class="card-img-top" src="@Html.DisplayFor(x => item.GetThumbnail)" alt="Card image cap">
+                    <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="Card image cap">
                     <div class="card-block">
-                        <h4 class="card-title">Card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a asp-action="GalleryDetail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">Go somewhere</a>
+                        <h4 class="card-title">@Html.DisplayFor(model => item.Title) (@Html.DisplayFor(model => item.Likes) likes)</h4>
+                        <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
+                        <a asp-action="GalleryDetail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">View</a>
                     </div>
                 </div>
             }
