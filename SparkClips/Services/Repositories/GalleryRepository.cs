@@ -8,10 +8,10 @@ using System;
 
 namespace SparkClips.Services.Repositories
 {
-    public class GalleryRepository : IGalleryRepository
+    public class GalleryRepository : IGalleryRepository, IDisposable
     {
         private ApplicationDbContext _sparkClipsContext;
-
+        private List<GalleryEntry> _galleryEntries;
 
         public GalleryRepository(ApplicationDbContext applicationDbContext) {
             _sparkClipsContext = applicationDbContext;
@@ -23,12 +23,10 @@ namespace SparkClips.Services.Repositories
         /// <returns></returns>
         public async Task<List<GalleryEntry>> GetGalleryEntries()
         {
-            List<GalleryEntry> galleryEntries = await _sparkClipsContext.GalleryEntries
+            return _galleryEntries = await _sparkClipsContext.GalleryEntries
                 .Include(galleryEntry => galleryEntry.Images)
                     .ThenInclude(image => image.Image)
                 .ToListAsync();
-
-            return galleryEntries;
         }
 
         /// <summary>
@@ -46,6 +44,7 @@ namespace SparkClips.Services.Repositories
                 .Include(ge => ge.Tags)
                     .ThenInclude(tag => tag.Tag)
                 .SingleOrDefaultAsync(g => g.GalleryEntryID == galleryEntryID);
+
             return galleryEntry;
         }
 
@@ -56,7 +55,7 @@ namespace SparkClips.Services.Repositories
         /// <returns>The number of likes on the gallery entry</returns>
         public async Task<int> ComputeNLikes(GalleryEntry galleryEntry)
         {
-            var likes = await _sparkClipsContext.GalleryEntry_ApplicationUser
+            List<GalleryEntry_ApplicationUser> likes = await _sparkClipsContext.GalleryEntry_ApplicationUser
                 .Include(ge_au => ge_au.GalleryEntry)
                 .Include(ge_au => ge_au.ApplicationUser)
                 .Where(ge_au => ge_au.GalleryEntry == galleryEntry)
@@ -86,5 +85,28 @@ namespace SparkClips.Services.Repositories
                 return firstImage.Image.Url;
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // dispose managed state (managed objects).
+                    _sparkClipsContext.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

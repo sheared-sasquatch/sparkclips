@@ -16,16 +16,14 @@
             @foreach (var item in Model)
             {
                 <div class="flex-column card" style="width: 20rem;">
-                    <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="Card image cap">
+                    <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="@Html.DisplayFor(model => item.Title)">
                     <div class="card-block">
                         <h4 class="card-title">@Html.DisplayFor(model => item.Title) (@Html.DisplayFor(model => item.Likes) likes)</h4>
                         <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
-                        <a asp-action="GalleryDetail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">View</a>
+                        <a asp-action="Detail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">View</a>
                     </div>
                 </div>
             }
-
-
 
         </div>
     </div>
@@ -69,26 +67,3 @@
         </div>
     </div>
 </div>
-
-<!--
-Previous setup
-
-<div class="row" id="hidden">
-
-
-    <div class="col-md-4">
-
-        <div class="list-group">
-            @foreach (var item in Model)
-            {
-                <a asp-action="GalleryDetail" asp-route-id="@item.GalleryEntryID" class="list-group-item">@Html.DisplayFor(modelItem => item.Title)</a>
-            }
-        </div>
-
-    </div>
-    <div class="col-md-8 hidden-xs">
-        Details
-    </div>
-
-</div>
--->

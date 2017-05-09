@@ -29,35 +29,6 @@ namespace SparkClips.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Gallery()
-        {
-            List<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries();
-
-            // loop over each gallery entry and add any computed fields
-            foreach(GalleryEntry galleryEntry in galleryEntries)
-            {
-                // setting the thumbnail image
-                galleryEntry.Thumbnail = _galleryRepository.ComputeThumbnail(galleryEntry);
-
-                // seting the gallery entry number of likes
-                galleryEntry.Likes = await _galleryRepository.ComputeNLikes(galleryEntry);
-            }
-
-            return View(galleryEntries);
-        }
-
-        public async Task<IActionResult> GalleryDetail(int ID)
-        {
-            GalleryEntry galleryEntry = await _galleryRepository.GetGalleryEntryByID(ID);
-
-            if (galleryEntry == null)
-            {
-                return NotFound();
-            }
-
-            return View(galleryEntry);
-        }
-
         public IActionResult Log()
         {
             return View();
