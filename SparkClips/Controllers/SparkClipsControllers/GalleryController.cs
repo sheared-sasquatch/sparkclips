@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using SparkClips.Services.Repositories;
+﻿using Microsoft.AspNetCore.Mvc;
 using SparkClips.Models.HairyDatabase;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using SparkClips.Services.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SparkClips.Controllers
 {
@@ -19,7 +15,7 @@ namespace SparkClips.Controllers
             _galleryRepository = galleryRepository;
         }
 
-        // GET: /<controller>/
+        // GET: /Gallery/
         public async Task<IActionResult> Index()
         {
             List<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries();
@@ -34,7 +30,7 @@ namespace SparkClips.Controllers
             return View(galleryEntries);
         }
 
-        // GET: /<controller>/Detail/1
+        // GET: /Gallery/Detail/1
         public async Task<IActionResult> Detail(int ID)
         {
             GalleryEntry galleryEntry = await _galleryRepository.GetGalleryEntryByID(ID);
