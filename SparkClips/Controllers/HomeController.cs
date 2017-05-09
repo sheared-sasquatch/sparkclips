@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using SparkClips.Data;
 using SparkClips.Models.HairyDatabase;
 using Microsoft.EntityFrameworkCore;
+using SparkClips.Services.Repositories;
 
 namespace SparkClips.Controllers
 {
     public class HomeController : Controller
     {
-        private ApplicationDbContext _sparkClipsContext;
+        private IGalleryRepository _galleryRepository;
 
-        public HomeController(ApplicationDbContext sparkClipsContext)
+        public HomeController(IGalleryRepository galleryRepository)
         {
-            _sparkClipsContext = sparkClipsContext;
+            _galleryRepository = galleryRepository;
         }
 
         public IActionResult Index()
@@ -30,34 +31,16 @@ namespace SparkClips.Controllers
 
         public async Task<IActionResult> Gallery()
         {
-            List<GalleryEntry> galleryEntries = await _sparkClipsContext.GalleryEntries
-                .Include(galleryEntry => galleryEntry.Images) // https://docs.microsoft.com/en-us/ef/core/querying/related-data#eager-loading
-                    .ThenInclude(image => image.Image)
-                .ToListAsync();
+            List<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries();
 
             // loop over each gallery entry and add any computed fields
             foreach(GalleryEntry galleryEntry in galleryEntries)
             {
                 // setting the thumbnail image
-                if (galleryEntry.Images.Count() == 0)
-                {
-                    // if this gallery entry has no images defined, return a random stock photo
-                    galleryEntry.Thumbnail = "https://unsplash.it/g/200/300/?random";
-                }
-                else
-                {
-                    // get first related entry in the associative many2many table
-                    GalleryEntry_Image firstImage = galleryEntry.Images.First();
-                    galleryEntry.Thumbnail = firstImage.Image.Url;
-                }
+                galleryEntry.Thumbnail = _galleryRepository.ComputeThumbnail(galleryEntry);
 
-                var likes = await _sparkClipsContext.GalleryEntry_ApplicationUser
-                    .Include(ge_au => ge_au.GalleryEntry)
-                    .Include(ge_au => ge_au.ApplicationUser)
-                    .Where(ge_au => ge_au.GalleryEntry == galleryEntry)
-                    .ToListAsync();
-
-                galleryEntry.Likes = likes.Count();
+                // seting the gallery entry number of likes
+                galleryEntry.Likes = await _galleryRepository.ComputeNLikes(galleryEntry);
             }
 
             return View(galleryEntries);
@@ -65,12 +48,7 @@ namespace SparkClips.Controllers
 
         public async Task<IActionResult> GalleryDetail(int ID)
         {
-            GalleryEntry galleryEntry = await _sparkClipsContext.GalleryEntries
-                .Include(ge => ge.Images)
-                    .ThenInclude(image => image.Image)
-                .Include(ge => ge.Tags)
-                    .ThenInclude(tag => tag.Tag)
-                .SingleOrDefaultAsync(g => g.GalleryEntryID == ID);
+            GalleryEntry galleryEntry = await _galleryRepository.GetGalleryEntryByID(ID);
 
             if (galleryEntry == null)
             {
