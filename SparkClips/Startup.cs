@@ -13,6 +13,7 @@ using SparkClips.Data;
 using SparkClips.Models;
 using SparkClips.Services;
 using SparkClips.Services.BlobBob;
+using SparkClips.Services.Repositories;
 
 namespace SparkClips
 {
@@ -78,6 +79,7 @@ namespace SparkClips
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
             services.AddTransient<IFileStorage, FileStorage>();
+            services.AddTransient<IGalleryRepository, GalleryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -38,13 +38,33 @@ namespace SparkClips.Models.HairyDatabase
         public string Description { get; set; }
         [Required]
         public string Instructions { get; set; }
-        // TODO: Add a computed column for nLikes
-        // jk, a computed column won't work because it involves another query.
-        // We need this logic in a controller instead
 
         public List<GalleryEntry_Image> Images { get; set; } // Images for this gallery entry
         public List<GalleryEntry_Tag> Tags { get; set; } // Tags for this gallery entry
         public List<GalleryEntry_ApplicationUser> ApplicationUsers { get; set; } // Users that have favorited this gallery entry
+
+        /// <summary>
+        /// This field is excluded from the schema and is only being used to store the computed thumbnail
+        /// for specific gallery entries (the logic for setting this field should be in the controller).
+        /// 
+        /// After it is set, you can use this read-only property on a GalleryEntry object as if it were a string field
+        /// Example: 
+        ///     string thumbnail = galleryEntry.Thumbnail;
+        /// </summary>
+        [NotMapped]
+        public string Thumbnail { get; set; }
+
+        /// <summary>
+        /// This field is excluded from the schema and is only being used to store the number of
+        /// computed likes for specific gallery entries
+        /// The logic for setting this field should be in the controller.
+        /// 
+        /// After it is set, you can use this read-only property on a GalleryEntry object as if it were an int field
+        /// Example: 
+        ///     int nLikes = galleryEntry.Likes;
+        /// </summary>
+        [NotMapped]
+        public int Likes { get; set; }
     }
 
     /// <summary>

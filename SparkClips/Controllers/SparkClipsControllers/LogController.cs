@@ -4,24 +4,28 @@ using Microsoft.AspNetCore.Mvc;
 using SparkClips.Data;
 using SparkClips.Models.HairyDatabase;
 using SparkClips.Services.BlobBob;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace sparkclips.Controllers
+namespace SparkClips.Controllers
 {
-    public class UploadFilesController : Controller
+    public class LogController : Controller
     {
         private IFileStorage _fileStorage;
         private ApplicationDbContext _sparkClipsContext;
 
-        public UploadFilesController(IFileStorage fileStorage, ApplicationDbContext sparkClipsContext)
+        public LogController(IFileStorage fileStorage, ApplicationDbContext sparkClipsContext)
         {
             _fileStorage = fileStorage; // store a reference to the file storage object from ASP .NET's dependency injection container
             _sparkClipsContext = sparkClipsContext;
+        }
+
+        // GET: /Log/
+        public IActionResult Index()
+        {
+            return View();
         }
 
         /// <summary>
@@ -32,8 +36,8 @@ namespace sparkclips.Controllers
         /// get passed to the FileStorage.UploadImage method</param>
         /// <returns>A JSON object which gives some useless data about the files uploaded.
         /// This should probably become a redirect at some point.</returns>
-        [HttpPost("UploadFiles")]
-        public async Task<IActionResult> Post(List<IFormFile> files)
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(List<IFormFile> files)
         {
             long size = files.Sum(f => f.Length);
 
@@ -53,7 +57,7 @@ namespace sparkclips.Controllers
             // process uploaded files
             // Don't rely on or trust the FileName property without validation.
 
-            return Ok(new { count = files.Count, size});
+            return Ok(new { count = files.Count, size });
         }
     }
 }

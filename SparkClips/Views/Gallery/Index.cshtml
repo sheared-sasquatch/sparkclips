@@ -1,0 +1,69 @@
+﻿@model IEnumerable<SparkClips.Models.HairyDatabase.GalleryEntry>
+@{
+    ViewData["Title"] = "Gallery";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/gallery.css" />
+}
+<h2>@ViewData["Title"].</h2>
+
+
+<div class="row">
+    <div class="col-md-10">
+        <h3 class="pageTitle">Gallery</h3>
+        <div class="flex-row">
+
+            @foreach (var item in Model)
+            {
+                <div class="flex-column card" style="width: 20rem;">
+                    <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="@Html.DisplayFor(model => item.Title)">
+                    <div class="card-block">
+                        <h4 class="card-title">@Html.DisplayFor(model => item.Title) (@Html.DisplayFor(model => item.Likes) likes)</h4>
+                        <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
+                        <a asp-action="Detail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-2 filters">
+        <h3>
+            Filter
+        </h3>
+        <div class="form-group">
+            <label for="length">Length:</label>
+            <select class="form-control" id="length">
+                <option>Very Short</option>
+                <option>Short</option>
+                <option>Average</option>
+                <option>Long</option>
+                <option>Very Long</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="maintainance">Maintainance:</label>
+            <select class="form-control" id="maintainance">
+                <option>Easy</option>
+                <option>Medium</option>
+                <option>Hard</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="beard">Beard:</label>
+            <select class="form-control" id="beard">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="quality">Hair Quality:</label>
+            <select class="form-control" id="quality">
+                <option value="">Curly</option>
+                <option value="">Straight</option>
+                <option value="">Fuzzy</option>
+                <option value="">Bushy</option>
+            </select>
+        </div>
+    </div>
+</div>
