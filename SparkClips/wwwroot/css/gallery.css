@@ -16,11 +16,7 @@ h2{
     object-fit: cover;
     height: 280px;
 }
-.filters{
-    position: fixed;
-    left:80%;
-    top:50px;
-}
+
 /* rules for screens 480px and wider */
 @media (min-width: 490px) {
     .flex-column {
@@ -33,4 +29,13 @@ h2{
     .flex-column {
         flex-basis: 33%;
     }
+}
+
+/* rules for screens 1100 and wider */
+@media (min-width: 1000px) {
+    .filters{
+        position: fixed;
+        left:80%;
+        top:50px;
+    }    
 }
