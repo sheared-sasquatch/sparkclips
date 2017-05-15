@@ -2,6 +2,21 @@
 @{
     ViewData["Title"] = "Gallery";
 }
+@section Scripts {
+    <script>
+        var buttons = document.querySelectorAll(".glyphicon-star");
+        buttons.forEach(function(cur) {
+            cur.onclick = function() {
+                var req = new XMLHttpRequest();
+                req.open("POST", "/Favorite/Add");
+                req.onload = function() {console.log("lol")};
+                req.onerror = function() {console.log("naw")};
+                var data = new FormData; data.append("id", this.data);
+                req.send(data);
+            }
+        });
+    </script>
+}
 @section Styles {
     <link rel="stylesheet" href="~/css/gallery.css" />
 }
@@ -21,6 +36,7 @@
                         <h4 class="card-title">@Html.DisplayFor(model => item.Title) (@Html.DisplayFor(model => item.Likes) likes)</h4>
                         <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
                         <a asp-action="Detail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">View</a>
+                        <button data="@item.GalleryEntryID" class="btn btn-primary glyphicon glyphicon-star"></button>
                     </div>
                 </div>
             }
