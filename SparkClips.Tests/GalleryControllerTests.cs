@@ -27,14 +27,14 @@ namespace SparkClips.Tests
             // arrange
             var mockGalleryRepository = new Mock<IGalleryRepository>();
             mockGalleryRepository
-                .Setup(x => x.GetGalleryEntries())
+                .Setup(x => x.GetGalleryEntries(null))
                 .Returns(Task.FromResult(GetTestSessions()));
 
 
             var controller = new GalleryController(mockGalleryRepository.Object);
 
             // act
-            var result = await controller.Index();
+            var result = await controller.Index(null);
 
             // assert
             var viewResult = Assert.IsType<ViewResult>(result);
