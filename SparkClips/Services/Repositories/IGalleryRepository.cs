@@ -8,7 +8,7 @@ namespace SparkClips.Services.Repositories
 {
     public interface IGalleryRepository
     {
-        Task<List<GalleryEntry>> GetGalleryEntries();
+        Task<List<GalleryEntry>> GetGalleryEntries(List<int> tags);
         Task<GalleryEntry> GetGalleryEntryByID(int galleryEntryID);
         Task<int> ComputeNLikes(GalleryEntry galleryEntry);
         string ComputeThumbnail(GalleryEntry galleryEntry);

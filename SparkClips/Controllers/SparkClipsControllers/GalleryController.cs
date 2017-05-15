@@ -16,9 +16,9 @@ namespace SparkClips.Controllers
         }
 
         // GET: /Gallery/
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(List<int> tags)
         {
-            List<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries();
+            List<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries(tags);
             // loop over each gallery entry and add any computed fields
             foreach (GalleryEntry galleryEntry in galleryEntries)
             {
