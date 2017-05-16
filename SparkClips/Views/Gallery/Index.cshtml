@@ -8,11 +8,14 @@
         buttons.forEach(function(cur) {
             cur.onclick = function() {
                 var req = new XMLHttpRequest();
-                req.open("POST", "/Favorite/Add");
+                req.open("POST", "api/GalleryEntry_ApplicationUserApi");
+                req.setRequestHeader("Content-Type", "application/json");
                 req.onload = function() {console.log("lol")};
                 req.onerror = function() {console.log("naw")};
-                var data = new FormData; data.append("id", this.data);
-                req.send(data);
+                console.log(this.id); 
+                var json = {"GalleryEntryID": parseInt(this.id), "ApplicationUserId": 1};
+                console.log(JSON.stringify(json));
+                req.send(json);
             }
         });
     </script>
@@ -36,7 +39,7 @@
                         <h4 class="card-title">@Html.DisplayFor(model => item.Title) (@Html.DisplayFor(model => item.Likes) likes)</h4>
                         <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
                         <a asp-action="Detail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">View</a>
-                        <button data="@item.GalleryEntryID" class="btn btn-primary glyphicon glyphicon-star"></button>
+                        <button id="@item.GalleryEntryID" class="btn btn-primary glyphicon glyphicon-star"></button>
                     </div>
                 </div>
             }

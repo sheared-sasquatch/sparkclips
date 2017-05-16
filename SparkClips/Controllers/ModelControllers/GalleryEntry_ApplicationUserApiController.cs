@@ -55,7 +55,7 @@ namespace SparkClips.Controllers.ModelControllers
             {
                 return BadRequest(ModelState);
             }
-
+            System.Diagnostics.Debug.WriteLine("Wasguud");
             if (id != galleryEntry_ApplicationUser.GalleryEntryID)
             {
                 return BadRequest();
