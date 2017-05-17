@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="wwwroot\css\gallery-detail.css" />
+    <Content Include="wwwroot\js\gallery.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
