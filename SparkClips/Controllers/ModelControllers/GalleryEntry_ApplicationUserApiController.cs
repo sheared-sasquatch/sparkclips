@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SparkClips.Data;
+using SparkClips.Models;
 using SparkClips.Models.HairyDatabase;
 
 namespace SparkClips.Controllers.ModelControllers
@@ -15,10 +17,12 @@ namespace SparkClips.Controllers.ModelControllers
     public class GalleryEntry_ApplicationUserApiController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GalleryEntry_ApplicationUserApiController(ApplicationDbContext context)
+        public GalleryEntry_ApplicationUserApiController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/GalleryEntry_ApplicationUserApi
@@ -55,7 +59,6 @@ namespace SparkClips.Controllers.ModelControllers
             {
                 return BadRequest(ModelState);
             }
-            System.Diagnostics.Debug.WriteLine("Wasguud");
             if (id != galleryEntry_ApplicationUser.GalleryEntryID)
             {
                 return BadRequest();
@@ -82,6 +85,7 @@ namespace SparkClips.Controllers.ModelControllers
             return NoContent();
         }
 
+        //http POST localhost:53212/api/GalleryEntry_ApplicationUserApi/ GalleryEntryId=1 ApplicationEntryId=1
         // POST: api/GalleryEntry_ApplicationUserApi
         [HttpPost]
         public async Task<IActionResult> PostGalleryEntry_ApplicationUser([FromBody] GalleryEntry_ApplicationUser galleryEntry_ApplicationUser)
@@ -90,7 +94,9 @@ namespace SparkClips.Controllers.ModelControllers
             {
                 return BadRequest(ModelState);
             }
-
+            var user = await _userManager.GetUserAsync(User);
+            var id = user.Id;
+            galleryEntry_ApplicationUser.ApplicationUserID = id;
             _context.GalleryEntry_ApplicationUser.Add(galleryEntry_ApplicationUser);
             try
             {
@@ -100,7 +106,19 @@ namespace SparkClips.Controllers.ModelControllers
             {
                 if (GalleryEntry_ApplicationUserExists(galleryEntry_ApplicationUser.GalleryEntryID))
                 {
-                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+					// This is what happens when the user favorites something that has already been favorited. 
+					// Decision has been to ignore this.
+					 return new StatusCodeResult(StatusCodes.Status409Conflict);
+
+                    //var galleryEntry_ApplicationUser2 = await _context.GalleryEntry_ApplicationUser.SingleOrDefaultAsync(m => m.GalleryEntryID == galleryEntry_ApplicationUser.GalleryEntryID);
+					//if (galleryEntry_ApplicationUser2 == null)
+					//{
+					//	return NotFound();
+					//}
+
+					//_context.GalleryEntry_ApplicationUser.Remove(galleryEntry_ApplicationUser2);
+					//await _context.SaveChangesAsync();
+                    //return new StatusCodeResult(StatusCodes.Status200OK);
                 }
                 else
                 {
@@ -111,8 +129,9 @@ namespace SparkClips.Controllers.ModelControllers
             return CreatedAtAction("GetGalleryEntry_ApplicationUser", new { id = galleryEntry_ApplicationUser.GalleryEntryID }, galleryEntry_ApplicationUser);
         }
 
-        // DELETE: api/GalleryEntry_ApplicationUserApi/5
-        [HttpDelete("{id}")]
+		//http DELETE localhost:53212/api/GalleryEntry_ApplicationUserApi/1
+		// DELETE: api/GalleryEntry_ApplicationUserApi/5
+		[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGalleryEntry_ApplicationUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
