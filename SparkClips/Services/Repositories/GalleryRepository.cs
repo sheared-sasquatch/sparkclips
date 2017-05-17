@@ -1,28 +1,26 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SparkClips.Data;
 using SparkClips.Models.HairyDatabase;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace SparkClips.Services.Repositories
 {
     public class GalleryRepository : IGalleryRepository, IDisposable
     {
         private ApplicationDbContext _sparkClipsContext;
+        private List<GalleryEntry> _galleryEntries;
 
         public GalleryRepository(ApplicationDbContext applicationDbContext) {
             _sparkClipsContext = applicationDbContext;
         }
 
         /// <summary>
-        /// Returns a list of gallery entries
+        /// Return a list of all of the GalleryEntries
         /// </summary>
-        /// <param name="tags">List of tag PKs to filter results on</param>
-        /// <returns>
-        /// A list of gallery entries that are associated with ALL of the specified tags
-        /// </returns>
+        /// <returns></returns>
         public async Task<List<GalleryEntry>> GetGalleryEntries(List<int> tags)
         {
             List<GalleryEntry> galleryEntries = await _sparkClipsContext.GalleryEntries
@@ -30,7 +28,7 @@ namespace SparkClips.Services.Repositories
                     .ThenInclude(image => image.Image)
                 .Include(galleryEntry => galleryEntry.Tags)
                     .ThenInclude(tag => tag.Tag)
-                .Where(galleryEntry => tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag))) // filter by entries that have ALL specified tags
+                .Where(galleryEntry => tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag)))
                 .ToListAsync();
     
             return galleryEntries;
