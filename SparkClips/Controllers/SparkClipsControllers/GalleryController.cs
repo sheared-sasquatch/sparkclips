@@ -2,6 +2,7 @@
 using SparkClips.Models.HairyDatabase;
 using SparkClips.Services.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SparkClips.Controllers
@@ -18,7 +19,10 @@ namespace SparkClips.Controllers
         // GET: /Gallery/
         public async Task<IActionResult> Index(List<int> tags)
         {
-            List<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries(tags);
+            IEnumerable<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries(tags);
+            galleryEntries = galleryEntries.Where(galleryEntry => 
+                tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag)));
+
             // loop over each gallery entry and add any computed fields
             foreach (GalleryEntry galleryEntry in galleryEntries)
             {
@@ -27,6 +31,7 @@ namespace SparkClips.Controllers
                 // seting the gallery entry number of likes
                 galleryEntry.Likes = await _galleryRepository.ComputeNLikes(galleryEntry);
             }
+            galleryEntries = galleryEntries.OrderByDescending(galleryEntry => galleryEntry.Likes);
             return View(galleryEntries);
         }
 
