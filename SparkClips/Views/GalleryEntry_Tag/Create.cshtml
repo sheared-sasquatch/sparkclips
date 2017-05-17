@@ -1,0 +1,40 @@
+@model SparkClips.Models.HairyDatabase.GalleryEntry_Tag
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>GalleryEntry_Tag</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="GalleryEntryID" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="GalleryEntryID" class ="form-control" asp-items="ViewBag.GalleryEntryID"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TagID" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="TagID" class ="form-control" asp-items="ViewBag.TagID"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

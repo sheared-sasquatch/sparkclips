@@ -10,22 +10,22 @@ using SparkClips.Models.HairyDatabase;
 
 namespace SparkClips.Controllers.ModelControllers
 {
-    public class ImagesController : Controller
+    public class TagsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ImagesController(ApplicationDbContext context)
+        public TagsController(ApplicationDbContext context)
         {
             _context = context;    
         }
 
-        // GET: Images
+        // GET: Tags
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Images.ToListAsync());
+            return View(await _context.Tags.ToListAsync());
         }
 
-        // GET: Images/Details/5
+        // GET: Tags/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace SparkClips.Controllers.ModelControllers
                 return NotFound();
             }
 
-            var image = await _context.Images
-                .SingleOrDefaultAsync(m => m.ImageID == id);
-            if (image == null)
+            var tag = await _context.Tags
+                .SingleOrDefaultAsync(m => m.TagID == id);
+            if (tag == null)
             {
                 return NotFound();
             }
 
-            return View(image);
+            return View(tag);
         }
 
-        // GET: Images/Create
+        // GET: Tags/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Images/Create
+        // POST: Tags/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ImageID,Filename,Guid,Url,ContainerName")] Image image)
+        public async Task<IActionResult> Create([Bind("TagID,Name")] Tag tag)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(image);
+                _context.Add(tag);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(image);
+            return View(tag);
         }
 
-        // GET: Images/Edit/5
+        // GET: Tags/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace SparkClips.Controllers.ModelControllers
                 return NotFound();
             }
 
-            var image = await _context.Images.SingleOrDefaultAsync(m => m.ImageID == id);
-            if (image == null)
+            var tag = await _context.Tags.SingleOrDefaultAsync(m => m.TagID == id);
+            if (tag == null)
             {
                 return NotFound();
             }
-            return View(image);
+            return View(tag);
         }
 
-        // POST: Images/Edit/5
+        // POST: Tags/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ImageID,Filename,Guid,Url,ContainerName")] Image image)
+        public async Task<IActionResult> Edit(int id, [Bind("TagID,Name")] Tag tag)
         {
-            if (id != image.ImageID)
+            if (id != tag.TagID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace SparkClips.Controllers.ModelControllers
             {
                 try
                 {
-                    _context.Update(image);
+                    _context.Update(tag);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ImageExists(image.ImageID))
+                    if (!TagExists(tag.TagID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace SparkClips.Controllers.ModelControllers
                 }
                 return RedirectToAction("Index");
             }
-            return View(image);
+            return View(tag);
         }
 
-        // GET: Images/Delete/5
+        // GET: Tags/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace SparkClips.Controllers.ModelControllers
                 return NotFound();
             }
 
-            var image = await _context.Images
-                .SingleOrDefaultAsync(m => m.ImageID == id);
-            if (image == null)
+            var tag = await _context.Tags
+                .SingleOrDefaultAsync(m => m.TagID == id);
+            if (tag == null)
             {
                 return NotFound();
             }
 
-            return View(image);
+            return View(tag);
         }
 
-        // POST: Images/Delete/5
+        // POST: Tags/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var image = await _context.Images.SingleOrDefaultAsync(m => m.ImageID == id);
-            _context.Images.Remove(image);
+            var tag = await _context.Tags.SingleOrDefaultAsync(m => m.TagID == id);
+            _context.Tags.Remove(tag);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        private bool ImageExists(int id)
+        private bool TagExists(int id)
         {
-            return _context.Images.Any(e => e.ImageID == id);
+            return _context.Tags.Any(e => e.TagID == id);
         }
     }
 }

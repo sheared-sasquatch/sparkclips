@@ -21,12 +21,16 @@ namespace SparkClips.Services.Repositories
         /// Return a list of all of the GalleryEntries
         /// </summary>
         /// <returns></returns>
-        public async Task<List<GalleryEntry>> GetGalleryEntries()
+        public async Task<IEnumerable<GalleryEntry>> GetGalleryEntries(List<int> tags)
         {
-            return _galleryEntries = await _sparkClipsContext.GalleryEntries
+            IEnumerable<GalleryEntry> galleryEntries = await _sparkClipsContext.GalleryEntries
                 .Include(galleryEntry => galleryEntry.Images)
                     .ThenInclude(image => image.Image)
+                .Include(galleryEntry => galleryEntry.Tags)
+                    .ThenInclude(tag => tag.Tag)
                 .ToListAsync();
+    
+            return galleryEntries;
         }
 
         /// <summary>

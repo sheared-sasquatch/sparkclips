@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using SparkClips.Data;
 using SparkClips.Models.HairyDatabase;
 
-namespace SparkClips.Controllers
+namespace SparkClips.Controllers.ModelControllers
 {
     public class GalleryEntry_ApplicationUserController : Controller
     {

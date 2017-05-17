@@ -1,6 +1,7 @@
 ﻿using SparkClips.Services.BlobBob;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +15,11 @@ namespace SparkClips.Models.HairyDatabase
     {
         public int ImageID { get; set; }
         public string Filename { get; set; }
+        [Required]
         public Guid Guid { get; set; }
+        [Required]
         public string Url { get; set; }
+        [Required]
         public ContainerName ContainerName { get; set; }
 
         public List<GalleryEntry_Image> GalleryEntries { get; set; } // gallery entries that have this image
@@ -28,8 +32,11 @@ namespace SparkClips.Models.HairyDatabase
     public class GalleryEntry
     {
         public int GalleryEntryID { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public string Instructions { get; set; }
 
         public List<GalleryEntry_Image> Images { get; set; } // Images for this gallery entry
@@ -83,6 +90,7 @@ namespace SparkClips.Models.HairyDatabase
     public class Tag
     {
         public int TagID { get; set; }
+        [Required]
         public string Name { get; set; }
 
         public List<GalleryEntry_Tag> GalleryEntries { get; set; } // Gallery entries that have this tag
@@ -108,8 +116,12 @@ namespace SparkClips.Models.HairyDatabase
     {
         public int LogEntryID { get; set; }
         public string Description { get; set; }
-        public double Cost { get; set; }
-        public DateTime Timestamp { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal? Cost { get; set; } // make decimal a nullable type so that ef core doesn't make it required by convention
+        [Display(Name = "Haircut Date")]
+        [DataType(DataType.Date)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime DateTimeCreated { get; set; } // Gets auto set on first save
         public string Location { get; set; }
         public string Barbers { get; set; }
 
