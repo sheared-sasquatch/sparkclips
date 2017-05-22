@@ -13,5 +13,6 @@ namespace SparkClips.Models
         public string HairColor { get; set; }
 
         public List<GalleryEntry_ApplicationUser> GalleryEntries { get; set; }
+        public List<LogEntry> LogEntries { get; set; }
     }
 }

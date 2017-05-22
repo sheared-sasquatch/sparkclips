@@ -11,6 +11,7 @@ using SparkClips.Models.HairyDatabase;
 using SparkClips.Services.BlobBob;
 using SparkClips.Services.Repositories;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,7 +70,7 @@ namespace SparkClips.Tests
         }
 
 
-        private List<GalleryEntry> GetTestSessions()
+        private IEnumerable<GalleryEntry> GetTestSessions()
         {
             var sessions = new List<GalleryEntry>();
             sessions.Add(new GalleryEntry
@@ -93,7 +94,7 @@ namespace SparkClips.Tests
 
         private GalleryEntry GetSingleEntry()
         {
-            return GetTestSessions()[1];
+            return GetTestSessions().First();
         }
 
     }

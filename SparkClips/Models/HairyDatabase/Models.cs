@@ -125,6 +125,10 @@ namespace SparkClips.Models.HairyDatabase
         public string Location { get; set; }
         public string Barbers { get; set; }
 
+
+        public string ApplicationUserID { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+
         public List<LogEntry_Image> Images { get; set; } // Images for this log entry
     }
 

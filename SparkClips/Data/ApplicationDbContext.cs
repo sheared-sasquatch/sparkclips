@@ -87,6 +87,12 @@ namespace SparkClips.Data
                 .HasOne(get => get.ApplicationUser)
                 .WithMany(au => au.GalleryEntries)
                 .HasForeignKey(get => get.ApplicationUserID);
+
+            // Configure LogEntry
+            modelBuilder.Entity<LogEntry>()
+                .HasOne(logEntry => logEntry.ApplicationUser)
+                .WithMany(applicationUser => applicationUser.LogEntries)
+                .HasForeignKey(logEntry => logEntry.ApplicationUserID);
         }
     }
 }
