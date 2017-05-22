@@ -17,6 +17,10 @@ h2{
     object-fit: cover;
     height: 280px;
 }
+.card{
+    min-width: 315px;
+    
+}
 .bottomFilter{
     background-color: white;
     padding-left: 50px;
