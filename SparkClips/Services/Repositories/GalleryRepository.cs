@@ -90,6 +90,10 @@ namespace SparkClips.Services.Repositories
             }
         }
 
+        public bool isFavorited(GalleryEntry galleryEntry) {
+            return _sparkClipsContext.GalleryEntry_ApplicationUser.Any(e => e.GalleryEntryID == galleryEntry.GalleryEntryID);
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

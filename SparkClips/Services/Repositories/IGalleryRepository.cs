@@ -12,5 +12,6 @@ namespace SparkClips.Services.Repositories
         Task<GalleryEntry> GetGalleryEntryByID(int galleryEntryID);
         Task<int> ComputeNLikes(GalleryEntry galleryEntry);
         string ComputeThumbnail(GalleryEntry galleryEntry);
+        bool isFavorited(GalleryEntry galleryEntry, );
     }
 }

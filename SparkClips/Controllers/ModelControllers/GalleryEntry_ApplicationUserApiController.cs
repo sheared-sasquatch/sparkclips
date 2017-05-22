@@ -87,6 +87,11 @@ namespace SparkClips.Controllers.ModelControllers
 
         //http POST localhost:53212/api/GalleryEntry_ApplicationUserApi/ GalleryEntryId=1 ApplicationEntryId=1
         // POST: api/GalleryEntry_ApplicationUserApi
+
+        // Kyle: You need to remember to push this. You need to figure this shit out
+        // Also, you need to keep track of thes emoving parts
+        // This file, GalleryCOntroller, te ned method in GalleryReposityory/IGalleryPositoru
+        // fuck
         [HttpPost]
         public async Task<IActionResult> PostGalleryEntry_ApplicationUser([FromBody] GalleryEntry_ApplicationUser galleryEntry_ApplicationUser)
         {
@@ -97,7 +102,12 @@ namespace SparkClips.Controllers.ModelControllers
             var user = await _userManager.GetUserAsync(User);
             var id = user.Id;
             galleryEntry_ApplicationUser.ApplicationUserID = id;
-            _context.GalleryEntry_ApplicationUser.Add(galleryEntry_ApplicationUser);
+            if(favoriteExists(galleryEntry_ApplicationUser.GalleryEntryID, id)) {
+                _context.GalleryEntry_ApplicationUser.Remove(galleryEntry_ApplicationUser);
+            } else {
+                _context.GalleryEntry_ApplicationUser.Add(galleryEntry_ApplicationUser);
+            }
+            
             try
             {
                 await _context.SaveChangesAsync();
@@ -109,16 +119,6 @@ namespace SparkClips.Controllers.ModelControllers
 					// This is what happens when the user favorites something that has already been favorited. 
 					// Decision has been to ignore this.
 					 return new StatusCodeResult(StatusCodes.Status409Conflict);
-
-                    //var galleryEntry_ApplicationUser2 = await _context.GalleryEntry_ApplicationUser.SingleOrDefaultAsync(m => m.GalleryEntryID == galleryEntry_ApplicationUser.GalleryEntryID);
-					//if (galleryEntry_ApplicationUser2 == null)
-					//{
-					//	return NotFound();
-					//}
-
-					//_context.GalleryEntry_ApplicationUser.Remove(galleryEntry_ApplicationUser2);
-					//await _context.SaveChangesAsync();
-                    //return new StatusCodeResult(StatusCodes.Status200OK);
                 }
                 else
                 {
@@ -154,6 +154,14 @@ namespace SparkClips.Controllers.ModelControllers
         private bool GalleryEntry_ApplicationUserExists(int id)
         {
             return _context.GalleryEntry_ApplicationUser.Any(e => e.GalleryEntryID == id);
+        }
+
+        private bool favoriteExists(int id, string appid)
+        {
+            var results = _context.GalleryEntry_ApplicationUser
+                    .Where(ge_au => ge_au.GalleryEntryID == id && ge_au.ApplicationUserID == appid)
+                    .SingleOrDefault();
+            return results != null;
         }
     }
 }

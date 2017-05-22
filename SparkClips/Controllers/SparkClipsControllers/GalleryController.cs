@@ -30,6 +30,8 @@ namespace SparkClips.Controllers
                 galleryEntry.Thumbnail = _galleryRepository.ComputeThumbnail(galleryEntry);
                 // seting the gallery entry number of likes
                 galleryEntry.Likes = await _galleryRepository.ComputeNLikes(galleryEntry);
+                // Boolean has the picture been favorited by this user already
+                galleryEntry.Faved = _galleryRepository.isFavorited(galleryEntry);
             }
             galleryEntries = galleryEntries.OrderByDescending(galleryEntry => galleryEntry.Likes);
             return View(galleryEntries);
