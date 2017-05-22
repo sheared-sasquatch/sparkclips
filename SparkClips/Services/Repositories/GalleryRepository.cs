@@ -11,7 +11,6 @@ namespace SparkClips.Services.Repositories
     public class GalleryRepository : IGalleryRepository, IDisposable
     {
         private ApplicationDbContext _sparkClipsContext;
-        private List<GalleryEntry> _galleryEntries;
 
         public GalleryRepository(ApplicationDbContext applicationDbContext) {
             _sparkClipsContext = applicationDbContext;
