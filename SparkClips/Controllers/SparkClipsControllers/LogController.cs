@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SparkClips.Data;
 using SparkClips.Models.HairyDatabase;
 using SparkClips.Services.BlobBob;
@@ -23,8 +24,11 @@ namespace SparkClips.Controllers
         }
 
         // GET: /Log/
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            IEnumerable<LogEntry> logEntries = await _sparkClipsContext.LogEntries
+                .Include(logEntry => logEntry.ApplicationUser)
+                .ToListAsync();
             return View();
         }
 
