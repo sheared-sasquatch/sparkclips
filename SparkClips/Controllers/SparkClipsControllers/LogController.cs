@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SparkClips.Data;
 using SparkClips.Models.HairyDatabase;
 using SparkClips.Services.BlobBob;
+using SparkClips.Services.Repositories;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,20 +16,18 @@ namespace SparkClips.Controllers
     public class LogController : Controller
     {
         private IFileStorage _fileStorage;
-        private ApplicationDbContext _sparkClipsContext;
+        private ILogRepository _logRepository;
 
-        public LogController(IFileStorage fileStorage, ApplicationDbContext sparkClipsContext)
+        public LogController(IFileStorage fileStorage, ILogRepository logRepository)
         {
             _fileStorage = fileStorage; // store a reference to the file storage object from ASP .NET's dependency injection container
-            _sparkClipsContext = sparkClipsContext;
+            _logRepository = logRepository;
         }
 
         // GET: /Log/
         public async Task<IActionResult> Index()
         {
-            IEnumerable<LogEntry> logEntries = await _sparkClipsContext.LogEntries
-                .Include(logEntry => logEntry.ApplicationUser)
-                .ToListAsync();
+            IEnumerable<LogEntry> logEntries = await _logRepository.GetLogEntries();
             return View();
         }
 
@@ -52,8 +51,8 @@ namespace SparkClips.Controllers
                     Image image = await _fileStorage.UploadImage(ContainerName.Gallery, formFile);
                     Debug.WriteLine(image.Url);
                     Debug.WriteLine(image.Guid);
-                    _sparkClipsContext.Images.Add(image);
-                    _sparkClipsContext.SaveChanges();
+                    //_sparkClipsContext.Images.Add(image);
+                    //_sparkClipsContext.SaveChanges();
                     Debug.WriteLine("ID: " + image.ImageID);
                 }
             }
