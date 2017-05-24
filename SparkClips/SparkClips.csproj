@@ -9,6 +9,9 @@
     <UserSecretsId>aspnet-SparkClips-f5221b6e-3e45-417e-be02-9c2196bda7a6</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\js\gallery.js" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="wwwroot\css\gallery-detail.css" />
   </ItemGroup>
   <ItemGroup>
@@ -37,5 +40,8 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="wwwroot\js\gallery.js" />
   </ItemGroup>
 </Project>

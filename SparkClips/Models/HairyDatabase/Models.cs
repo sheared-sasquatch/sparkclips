@@ -65,6 +65,9 @@ namespace SparkClips.Models.HairyDatabase
         /// </summary>
         [NotMapped]
         public int Likes { get; set; }
+
+        [NotMapped]
+        public Boolean Faved { get; set; }
     }
 
     /// <summary>

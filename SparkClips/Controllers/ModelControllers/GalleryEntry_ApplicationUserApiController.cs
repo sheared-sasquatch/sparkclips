@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SparkClips.Data;
+using SparkClips.Models;
 using SparkClips.Models.HairyDatabase;
 
 namespace SparkClips.Controllers.ModelControllers
@@ -15,10 +17,12 @@ namespace SparkClips.Controllers.ModelControllers
     public class GalleryEntry_ApplicationUserApiController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GalleryEntry_ApplicationUserApiController(ApplicationDbContext context)
+        public GalleryEntry_ApplicationUserApiController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/GalleryEntry_ApplicationUserApi
@@ -55,7 +59,6 @@ namespace SparkClips.Controllers.ModelControllers
             {
                 return BadRequest(ModelState);
             }
-
             if (id != galleryEntry_ApplicationUser.GalleryEntryID)
             {
                 return BadRequest();
@@ -82,7 +85,13 @@ namespace SparkClips.Controllers.ModelControllers
             return NoContent();
         }
 
+        //http POST localhost:53212/api/GalleryEntry_ApplicationUserApi/ GalleryEntryId=1 ApplicationEntryId=1
         // POST: api/GalleryEntry_ApplicationUserApi
+
+        // Kyle: You need to remember to push this. You need to figure this shit out
+        // Also, you need to keep track of thes emoving parts
+        // This file, GalleryCOntroller, te ned method in GalleryReposityory/IGalleryPositoru
+        // fuck
         [HttpPost]
         public async Task<IActionResult> PostGalleryEntry_ApplicationUser([FromBody] GalleryEntry_ApplicationUser galleryEntry_ApplicationUser)
         {
@@ -90,8 +99,17 @@ namespace SparkClips.Controllers.ModelControllers
             {
                 return BadRequest(ModelState);
             }
-
-            _context.GalleryEntry_ApplicationUser.Add(galleryEntry_ApplicationUser);
+            var user = await _userManager.GetUserAsync(User);
+            if(user != null) {
+                galleryEntry_ApplicationUser.ApplicationUserID = user.Id;
+                if(GalleryEntry_ApplicationUserExists(galleryEntry_ApplicationUser.GalleryEntryID)) {
+                    _context.GalleryEntry_ApplicationUser.Remove(galleryEntry_ApplicationUser);
+                } else {
+                    _context.GalleryEntry_ApplicationUser.Add(galleryEntry_ApplicationUser);
+                }
+            } else {
+                return new StatusCodeResult(StatusCodes.Status401Unauthorized);
+            }            
             try
             {
                 await _context.SaveChangesAsync();
@@ -100,7 +118,9 @@ namespace SparkClips.Controllers.ModelControllers
             {
                 if (GalleryEntry_ApplicationUserExists(galleryEntry_ApplicationUser.GalleryEntryID))
                 {
-                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+					// This is what happens when the user favorites something that has already been favorited. 
+					// Decision has been to ignore this.
+					 return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
                 else
                 {
@@ -111,8 +131,9 @@ namespace SparkClips.Controllers.ModelControllers
             return CreatedAtAction("GetGalleryEntry_ApplicationUser", new { id = galleryEntry_ApplicationUser.GalleryEntryID }, galleryEntry_ApplicationUser);
         }
 
-        // DELETE: api/GalleryEntry_ApplicationUserApi/5
-        [HttpDelete("{id}")]
+		//http DELETE localhost:53212/api/GalleryEntry_ApplicationUserApi/1
+		// DELETE: api/GalleryEntry_ApplicationUserApi/5
+		[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGalleryEntry_ApplicationUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -136,5 +157,13 @@ namespace SparkClips.Controllers.ModelControllers
         {
             return _context.GalleryEntry_ApplicationUser.Any(e => e.GalleryEntryID == id);
         }
+
+        // private bool favoriteExists(int id, string appid)
+        // {
+        //     var results = _context.GalleryEntry_ApplicationUser
+        //             .Where(ge_au => ge_au.GalleryEntryID == id && ge_au.ApplicationUserID == appid)
+        //             .SingleOrDefault();
+        //     return results != null;
+        // }
     }
 }

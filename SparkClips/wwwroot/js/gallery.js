@@ -1,5 +1,4 @@
-﻿// Write your Javascript code.
-var buttons = document.querySelectorAll(".glyphicon-star");
+﻿var buttons = document.querySelectorAll(".glyphicon-star");
 buttons.forEach(function (cur) {
     cur.onclick = function () {
         var req = new XMLHttpRequest();

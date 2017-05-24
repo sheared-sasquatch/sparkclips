@@ -1,6 +1,9 @@
-﻿@model IEnumerable<SparkClips.Models.HairyDatabase.GalleryEntry>
+﻿﻿@model IEnumerable<SparkClips.Models.HairyDatabase.GalleryEntry>
 @{
     ViewData["Title"] = "Gallery";
+}
+@section Scripts {
+    <script src="~/js/site.js"></script>
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/gallery.css" />
@@ -21,6 +24,8 @@
                         <h4 class="card-title">@Html.DisplayFor(model => item.Title) (@Html.DisplayFor(model => item.Likes) likes)</h4>
                         <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
                         <a asp-action="Detail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">View</a>
+                        <button id="@item.GalleryEntryID" class="btn btn-primary glyphicon glyphicon-star"></button>
+                        <!--<h3>@item.Faved</h3>-->
                     </div>
                 </div>
             }
