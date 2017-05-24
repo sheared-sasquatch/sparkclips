@@ -100,14 +100,16 @@ namespace SparkClips.Controllers.ModelControllers
                 return BadRequest(ModelState);
             }
             var user = await _userManager.GetUserAsync(User);
-            var id = user.Id;
-            galleryEntry_ApplicationUser.ApplicationUserID = id;
-            if(favoriteExists(galleryEntry_ApplicationUser.GalleryEntryID, id)) {
-                _context.GalleryEntry_ApplicationUser.Remove(galleryEntry_ApplicationUser);
+            if(user != null) {
+                galleryEntry_ApplicationUser.ApplicationUserID = user.Id;
+                if(GalleryEntry_ApplicationUserExists(galleryEntry_ApplicationUser.GalleryEntryID)) {
+                    _context.GalleryEntry_ApplicationUser.Remove(galleryEntry_ApplicationUser);
+                } else {
+                    _context.GalleryEntry_ApplicationUser.Add(galleryEntry_ApplicationUser);
+                }
             } else {
-                _context.GalleryEntry_ApplicationUser.Add(galleryEntry_ApplicationUser);
-            }
-            
+                return new StatusCodeResult(StatusCodes.Status401Unauthorized);
+            }            
             try
             {
                 await _context.SaveChangesAsync();
@@ -156,12 +158,12 @@ namespace SparkClips.Controllers.ModelControllers
             return _context.GalleryEntry_ApplicationUser.Any(e => e.GalleryEntryID == id);
         }
 
-        private bool favoriteExists(int id, string appid)
-        {
-            var results = _context.GalleryEntry_ApplicationUser
-                    .Where(ge_au => ge_au.GalleryEntryID == id && ge_au.ApplicationUserID == appid)
-                    .SingleOrDefault();
-            return results != null;
-        }
+        // private bool favoriteExists(int id, string appid)
+        // {
+        //     var results = _context.GalleryEntry_ApplicationUser
+        //             .Where(ge_au => ge_au.GalleryEntryID == id && ge_au.ApplicationUserID == appid)
+        //             .SingleOrDefault();
+        //     return results != null;
+        // }
     }
 }
