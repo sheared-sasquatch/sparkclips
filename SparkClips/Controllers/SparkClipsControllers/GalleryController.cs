@@ -19,7 +19,7 @@ namespace SparkClips.Controllers
         // GET: /Gallery/
         public async Task<IActionResult> Index(List<int> tags)
         {
-            IEnumerable<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries(tags);
+            IEnumerable<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries();
             galleryEntries = galleryEntries.Where(galleryEntry => 
                 tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag)));
 
