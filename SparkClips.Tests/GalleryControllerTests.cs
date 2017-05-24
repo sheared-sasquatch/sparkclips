@@ -28,11 +28,16 @@ namespace SparkClips.Tests
             // arrange
             var mockGalleryRepository = new Mock<IGalleryRepository>();
             mockGalleryRepository
-                .Setup(x => x.GetGalleryEntries(null))
+                .Setup(x => x.GetGalleryEntries())
                 .Returns(Task.FromResult(GetTestSessions()));
 
+            var mockTagRepository = new Mock<ITagRepository>();
+            mockTagRepository
+                .Setup(x => x.GetTags())
+                .Returns(Task.FromResult(GetTestTags()));
 
-            var controller = new GalleryController(mockGalleryRepository.Object);
+
+            var controller = new GalleryController(mockGalleryRepository.Object, mockTagRepository.Object);
 
             // act
             var result = await controller.Index(null);
@@ -52,11 +57,17 @@ namespace SparkClips.Tests
 
             var mockGalleryRepository = new Mock<IGalleryRepository>();
             mockGalleryRepository
-                .Setup(x => x.GetGalleryEntryByID(test_pk))
-                .Returns(Task.FromResult(GetSingleEntry()));
+                .Setup(x => x.GetGalleryEntries())
+                .Returns(Task.FromResult(GetTestSessions()));
+
+            var mockTagRepository = new Mock<ITagRepository>();
+            mockTagRepository
+                .Setup(x => x.GetTags())
+                .Returns(Task.FromResult(GetTestTags()));
 
 
-            var controller = new GalleryController(mockGalleryRepository.Object);
+            var controller = new GalleryController(mockGalleryRepository.Object, mockTagRepository.Object);
+
 
             // act
             var result = await controller.Detail(test_pk);
@@ -92,10 +103,17 @@ namespace SparkClips.Tests
             return sessions;
         }
 
-        private GalleryEntry GetSingleEntry()
+        private IEnumerable<Tag> GetTestTags()
         {
-            return GetTestSessions().First();
+            var tags = new List<Tag>();
+            tags.Add(new Tag
+            {
+                TagID = 1,
+                Name = "short hair"
+            });
+            return tags;
         }
+
 
     }
 }
