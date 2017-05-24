@@ -90,9 +90,10 @@ namespace SparkClips.Services.Repositories
         }
 
         // Queries database to see if given user has favorited given gallery entry
-        //bool isFavorited(int galleryEntryId, string userId) {
-        //    _sparkClipsContext.GalleryEntry_ApplicationUser.Count()
-        //}
+        public bool isFavorited(int galleryEntryId, string userId) {
+            return _sparkClipsContext.GalleryEntry_ApplicationUser
+                    .Any(e => e.GalleryEntryID == galleryEntryId && e.ApplicationUserID == userId);
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

@@ -4,16 +4,22 @@ using SparkClips.Services.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+// Below two dependencies required for UserManager
+using Microsoft.AspNetCore.Identity;
+using SparkClips.Models;
+
+
 
 namespace SparkClips.Controllers
 {
     public class GalleryController : Controller
     {
         private IGalleryRepository _galleryRepository;
-
-        public GalleryController(IGalleryRepository galleryRepository)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public GalleryController(IGalleryRepository galleryRepository, UserManager<ApplicationUser> userManager)
         {
             _galleryRepository = galleryRepository;
+            _userManager = userManager;
         }
 
         // GET: /Gallery/
@@ -31,7 +37,8 @@ namespace SparkClips.Controllers
                 // seting the gallery entry number of likes
                 galleryEntry.Likes = await _galleryRepository.ComputeNLikes(galleryEntry);
                 // Boolean has the picture been favorited by this user already
-                //galleryEntry.Faved = _galleryRepository.isFavorited(galleryEntry);
+                var user = await _userManager.GetUserAsync(User);
+                galleryEntry.Faved = _galleryRepository.isFavorited(galleryEntry.GalleryEntryID, user.Id);
             }
             galleryEntries = galleryEntries.OrderByDescending(galleryEntry => galleryEntry.Likes);
             return View(galleryEntries);

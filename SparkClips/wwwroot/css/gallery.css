@@ -26,7 +26,9 @@ h2{
     padding-left: 50px;
     padding-top: 20px;
 }
-
+.alreadyFaved{
+    background-color: darkgray;
+}
 
 /* rules for screens 480px and wider */
 @media (min-width: 490px) {
