@@ -133,6 +133,9 @@ namespace SparkClips.Models.HairyDatabase
         public ApplicationUser ApplicationUser { get; set; }
 
         public List<LogEntry_Image> Images { get; set; } // Images for this log entry
+
+        [NotMapped]
+        public string Thumbnail { get; set; }
     }
 
     /// <summary>

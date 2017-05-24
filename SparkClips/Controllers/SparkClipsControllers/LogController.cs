@@ -28,7 +28,13 @@ namespace SparkClips.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<LogEntry> logEntries = await _logRepository.GetLogEntries();
-            return View();
+
+            foreach (LogEntry logEntry in logEntries)
+            {
+            // setting the thumbnail image
+               logEntry.Thumbnail = _logRepository.ComputeThumbnail(logEntry);
+            }
+            return View(logEntries);
         }
 
         /// <summary>
@@ -61,6 +67,22 @@ namespace SparkClips.Controllers
             // Don't rely on or trust the FileName property without validation.
 
             return Ok(new { count = files.Count, size });
+        }
+
+        // GET: /Log/Detail
+        public async Task<IActionResult> Detail(int ID)
+        {
+            LogEntry logEntry = await _logRepository.GetLogEntryByID(ID);
+            if (logEntry == null)
+            {
+                return NotFound();
+            }
+            return View(logEntry);
+        }
+
+        public IActionResult Entry()
+        {
+            return View();
         }
     }
 }
