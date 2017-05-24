@@ -25,6 +25,8 @@ namespace SparkClips.Services.Repositories
         {
             IEnumerable<LogEntry> logEntries = await _sparkClipsContext.LogEntries
                      .Include(logEntry => logEntry.ApplicationUser)
+                     .Include(logEntry => logEntry.Images)
+                        .ThenInclude(image => image.Image)
                      .ToListAsync();
 
             return logEntries;
@@ -45,6 +47,28 @@ namespace SparkClips.Services.Repositories
                 .SingleOrDefaultAsync(logEntry => logEntry.LogEntryID == logEntryID);
 
             return result;
+        }
+
+        /// <summary>
+        /// Compute the thumbnail url for a particular log entry
+        /// </summary>
+        /// <param name="logEntry">The log entry whose thumbnail you want to compute
+        /// Note: The collection navigation property "Images" needs to be set on this LogEntry instance
+        /// </param>
+        /// <returns>A string which is the thumbnail as a URL</returns>
+        public string ComputeThumbnail(LogEntry logEntry)
+        {
+            if (logEntry.Images.Count() == 0)
+            {
+                // if this gallery entry has no images defined, return a random stock photo
+                return "https://unsplash.it/g/200/300/?random";
+            }
+            else
+            {
+                // get first related entry in the associative many2many table
+                LogEntry_Image firstImage = logEntry.Images.First();
+                return firstImage.Image.Url;
+            }
         }
 
         #region IDisposable Support

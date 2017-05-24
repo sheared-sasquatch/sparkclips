@@ -10,5 +10,6 @@ namespace SparkClips.Services.Repositories
     {
         Task<IEnumerable<LogEntry>> GetLogEntries();
         Task<LogEntry> GetLogEntryByID(int logEntryID);
+        string ComputeThumbnail(LogEntry logEntry);
     }
 }
