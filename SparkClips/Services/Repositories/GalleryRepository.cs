@@ -89,9 +89,10 @@ namespace SparkClips.Services.Repositories
             }
         }
 
-        // public bool isFavorited(GalleryEntry galleryEntry) {
-        //     return _sparkClipsContext.GalleryEntry_ApplicationUser.Any(e => e.GalleryEntryID == galleryEntry.GalleryEntryID);
-        // }
+        // Queries database to see if given user has favorited given gallery entry
+        //bool isFavorited(int galleryEntryId, string userId) {
+        //    _sparkClipsContext.GalleryEntry_ApplicationUser.Count()
+        //}
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
