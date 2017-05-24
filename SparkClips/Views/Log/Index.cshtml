@@ -12,30 +12,30 @@
         <h3 class="pageTitle">Log</h3>
         <div class="flex-row">
 
-        @*    @foreach (var item in Model)
+            @foreach (var item in Model)
             {
                 <div class="flex-column card" style="width: 20rem;">
-                    <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="@Html.DisplayFor(model => item.DateTimeCreated)">
+                   @* <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="@Html.DisplayFor(model => item.DateTimeCreated)">*@
                     <div class="card-block">
                         <h4 class="card-title">@Html.DisplayFor(model => item.Location)@Html.DisplayFor(model => item.Barbers)@Html.DisplayFor(model => item.Cost)</h4>
                         <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
-                        <a asp-action="Detail" asp-route-id="@item.LogEntryID" class="btn btn-primary">View</a>
+                        @*<a asp-action="Detail" asp-route-id="@item.LogEntryID" class="btn btn-primary">View</a>*@
                     </div>
                 </div>
-            } *@
+            } 
 
             <div>
                 <a asp-action="Entry" class="btn btn-primary">Add a New Entry</a>
             </div>
 
-            <div class="flex-column card" style="width: 20rem;">
+            @*<div class="flex-column card" style="width: 20rem;">
                  <img class="card-img-top" src="http://www.jeremyvarner.com/blog/wp-content/uploads/2014/02/Harry-and-the-Hendersons.jpg" alt="Card image cap">
                  <div class="card-block">
                      <h4 class="card-title">Date of Haircut (From DateTimeCreated column)</h4>
                      <p class="card-text">Description user input</p>
                      <a asp-action="Detail" asp-route-id="" class="btn btn-primary">Go To Detail</a>
                  </div>
-           </div>
+           </div>*@
 
         </div>
     </div>
