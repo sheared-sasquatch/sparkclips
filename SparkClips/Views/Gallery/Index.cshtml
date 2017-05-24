@@ -25,8 +25,7 @@
                         <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
                         <a asp-action="Detail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">View</a>
                         <button id="@item.GalleryEntryID" 
-                                class="btn btn-primary glyphicon glyphicon-star @(item.Faved ? "alreadyFaved" : "")"
-                                ></button>
+                                class="btn btn-primary glyphicon glyphicon-star @(item.Faved ? "alreadyFaved" : "")"></button>
                     </div>
                 </div>
             }
