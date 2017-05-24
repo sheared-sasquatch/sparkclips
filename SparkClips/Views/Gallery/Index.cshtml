@@ -9,7 +9,7 @@
 
 
 <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-12">
         <h3 class="pageTitle">Gallery</h3>
         <div class="flex-row">
 
@@ -27,7 +27,7 @@
 
         </div>
     </div>
-    <div class="col-md-2 filters">
+    <!--<div class="col-md-2 filters">
         <h3>
             Filter
         </h3>
@@ -65,5 +65,59 @@
                 <option value="">Bushy</option>
             </select>
         </div>
-    </div>
+    </div>-->
 </div>
+
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom dynamicFilter" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header" id="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" id="navbar-toggle" data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Filter</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav bottomFilter">
+                <div class="form-group">
+                    <label for="length">Length:</label>
+                    <select class="form-control" id="length">
+                        <option>Very Short</option>
+                        <option>Short</option>
+                        <option>Average</option>
+                        <option>Long</option>
+                        <option>Very Long</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="maintainance">Maintainance:</label>
+                    <select class="form-control" id="maintainance">
+                        <option>Easy</option>
+                        <option>Medium</option>
+                        <option>Hard</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="beard">Beard:</label>
+                    <select class="form-control" id="beard">
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quality">Hair Quality:</label>
+                    <select class="form-control" id="quality">
+                        <option value="">Curly</option>
+                        <option value="">Straight</option>
+                        <option value="">Fuzzy</option>
+                        <option value="">Bushy</option>
+                    </select>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>
