@@ -2,9 +2,11 @@
 @{
     ViewData["Title"] = "Gallery";
 }
+
 @section Scripts {
-    <script src="~/js/site.js"></script>
+    <script src="~/js/gallery.js" asp-append-version="true"></script>
 }
+
 @section Styles {
     <link rel="stylesheet" href="~/css/gallery.css" />
 }
@@ -51,8 +53,8 @@
             <ul class="nav navbar-nav bottomFilter">
                 <h2>Tags</h2>
 
-                    <form action="/Gallery" method="get">
-                        <div class="checkbox">
+                    <form id="tag-form" action="/Gallery" method="get">
+                        <!--<div class="checkbox">
                             <label>
                             <input type="checkbox" name="tags" value="1"> Short hair
                             </label>
@@ -61,7 +63,7 @@
                             <label>
                             <input type="checkbox" name="tags" value="2"> Long hair
                             </label>
-                        </div>
+                        </div>-->
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
 
