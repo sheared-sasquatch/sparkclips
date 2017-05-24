@@ -14,6 +14,8 @@
         }
     });
 
+    // commented the tag loading because it turned out to be 
+    // a task more suitable for the server side
     // fetch('/api/TagsApi')
     //     .then(function (response) {
     //         return response.json()

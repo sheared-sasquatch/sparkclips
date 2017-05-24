@@ -1,10 +1,13 @@
 ﻿﻿@model IEnumerable<SparkClips.Models.HairyDatabase.GalleryEntry>
+
 @{
     ViewData["Title"] = "Gallery";
 }
+
 @section Scripts {
-    <script src="~/js/site.js"></script>
+    <script src="~/js/gallery.js" asp-append-version="true"></script>
 }
+
 @section Styles {
     <link rel="stylesheet" href="~/css/gallery.css" />
 }
@@ -32,45 +35,6 @@
 
         </div>
     </div>
-    <!--<div class="col-md-2 filters">
-        <h3>
-            Filter
-        </h3>
-        <div class="form-group">
-            <label for="length">Length:</label>
-            <select class="form-control" id="length">
-                <option>Very Short</option>
-                <option>Short</option>
-                <option>Average</option>
-                <option>Long</option>
-                <option>Very Long</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="maintainance">Maintainance:</label>
-            <select class="form-control" id="maintainance">
-                <option>Easy</option>
-                <option>Medium</option>
-                <option>Hard</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="beard">Beard:</label>
-            <select class="form-control" id="beard">
-                <option>Yes</option>
-                <option>No</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="quality">Hair Quality:</label>
-            <select class="form-control" id="quality">
-                <option value="">Curly</option>
-                <option value="">Straight</option>
-                <option value="">Fuzzy</option>
-                <option value="">Bushy</option>
-            </select>
-        </div>
-    </div>-->
 </div>
 
 
@@ -88,40 +52,30 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
             <ul class="nav navbar-nav bottomFilter">
-                <div class="form-group">
-                    <label for="length">Length:</label>
-                    <select class="form-control" id="length">
-                        <option>Very Short</option>
-                        <option>Short</option>
-                        <option>Average</option>
-                        <option>Long</option>
-                        <option>Very Long</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="maintainance">Maintainance:</label>
-                    <select class="form-control" id="maintainance">
-                        <option>Easy</option>
-                        <option>Medium</option>
-                        <option>Hard</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="beard">Beard:</label>
-                    <select class="form-control" id="beard">
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="quality">Hair Quality:</label>
-                    <select class="form-control" id="quality">
-                        <option value="">Curly</option>
-                        <option value="">Straight</option>
-                        <option value="">Fuzzy</option>
-                        <option value="">Bushy</option>
-                    </select>
-                </div>
+                <h2>Tags</h2>
+
+                    <form id="tag-form" action="/Gallery" method="get">
+                        @*Loop over list of tuples, need to cast first*@
+                        @foreach (var tag in (IEnumerable<Tuple<int, string, bool>>)ViewData["tags"])
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    @if (tag.Item3)
+                                    {
+                                        <input type="checkbox" name="tags" value="@tag.Item1" checked/>@tag.Item2
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="tags" value="@tag.Item1" />@tag.Item2
+                                    }
+                                </label>
+                            </div>
+                        }
+         
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+
+
             </ul>
         </div>
     </div>
