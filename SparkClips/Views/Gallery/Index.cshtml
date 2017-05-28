@@ -27,8 +27,8 @@
                         <h4 class="card-title">@Html.DisplayFor(model => item.Title) (@Html.DisplayFor(model => item.Likes) likes)</h4>
                         <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
                         <a asp-action="Detail" asp-route-id="@item.GalleryEntryID" class="btn btn-primary">View</a>
-                        <button id="@item.GalleryEntryID" class="btn btn-primary glyphicon glyphicon-star"></button>
-                        <!--<h3>@item.Faved</h3>-->
+                        <button id="@item.GalleryEntryID" 
+                                class="btn btn-primary glyphicon glyphicon-star @(item.Faved ? "alreadyFaved" : "")"></button>
                     </div>
                 </div>
             }

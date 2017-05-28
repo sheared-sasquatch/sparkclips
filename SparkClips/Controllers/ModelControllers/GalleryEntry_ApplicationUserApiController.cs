@@ -100,9 +100,9 @@ namespace SparkClips.Controllers.ModelControllers
                 return BadRequest(ModelState);
             }
             var user = await _userManager.GetUserAsync(User);
-            if(user != null) {
+            if(user != null) { 
                 galleryEntry_ApplicationUser.ApplicationUserID = user.Id;
-                if(GalleryEntry_ApplicationUserExists(galleryEntry_ApplicationUser.GalleryEntryID)) {
+                if(UserHasLiked(galleryEntry_ApplicationUser.GalleryEntryID, galleryEntry_ApplicationUser.ApplicationUserID)) {
                     _context.GalleryEntry_ApplicationUser.Remove(galleryEntry_ApplicationUser);
                 } else {
                     _context.GalleryEntry_ApplicationUser.Add(galleryEntry_ApplicationUser);
@@ -156,6 +156,11 @@ namespace SparkClips.Controllers.ModelControllers
         private bool GalleryEntry_ApplicationUserExists(int id)
         {
             return _context.GalleryEntry_ApplicationUser.Any(e => e.GalleryEntryID == id);
+        }
+
+        private bool UserHasLiked(int galleryEntryId, string userId) {
+            return _context.GalleryEntry_ApplicationUser
+                    .Any(e => e.GalleryEntryID == galleryEntryId && e.ApplicationUserID == userId);
         }
 
         // private bool favoriteExists(int id, string appid)
