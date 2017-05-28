@@ -105,7 +105,7 @@ namespace SparkClips.Controllers
             {
                 if (formFile.Length > 0)
                 {
-                    Image image = await _fileStorage.UploadImage(ContainerName.Gallery, formFile);
+                    Image image = await _fileStorage.UploadImage(ContainerName.Log, formFile);
                     _sparkClipsContext.Images.Add(image);
                     _sparkClipsContext.SaveChanges();
 

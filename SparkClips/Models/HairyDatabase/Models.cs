@@ -71,6 +71,11 @@ namespace SparkClips.Models.HairyDatabase
 
         [NotMapped]
         public Boolean Filter { get; set; }
+
+        public override string ToString()
+        {
+            return Title;
+        }
     }
 
     /// <summary>
@@ -140,6 +145,11 @@ namespace SparkClips.Models.HairyDatabase
 
         [NotMapped]
         public string Thumbnail { get; set; }
+
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 
     /// <summary>
