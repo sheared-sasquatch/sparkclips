@@ -11,17 +11,23 @@
 
 @foreach (var image in Model.Images)
 {
-    <img src="@Html.DisplayFor(x =>image.Image.Url)" />
+    <img class="container" src="@Html.DisplayFor(x =>image.Image.Url)" />
 }
 
 
 <dl class="dl-horizontal">
+    <!-- Tags -->
     <dt>
-        @Html.DisplayNameFor(model => model.Tags)
+        Characteristics
     </dt>
     <dd>
-        @Html.DisplayFor(model => model.Tags)
+        <ul>
+        @foreach(var GalleryEntry_Tag in Model.Tags) {
+            <li>(@GalleryEntry_Tag.Tag.Name)</li>
+        }
+        </ul>
     </dd>
+    <!-- Description and instructions -->
     <dt>
         @Html.DisplayNameFor(model => model.Description)
     </dt>
