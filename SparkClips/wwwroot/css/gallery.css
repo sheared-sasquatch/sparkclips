@@ -2,6 +2,10 @@ h2{
     margin-bottom: 1em;
 }
 
+h3 {
+    margin-left: 15px;
+}
+
 .flex-row {
     display: flex;
     flex-wrap: wrap; /* wrap columns to next line if needed */
@@ -13,7 +17,7 @@ h2{
     padding-bottom: 50px;
 }
 .card-img-top{
-    width: 100%;
+    width: 100vw;
     object-fit: cover;
     height: 280px;
 }
@@ -40,6 +44,14 @@ h2{
 .card-block {
     padding-left: 15px;
 }
+#galleryView {
+    width: 100%;
+}
+#favoriteView .col-md-12 {
+    padding-right: 0;
+    padding-left: 0;
+}
+
 /* rules for screens 480px and wider */
 @media (min-width: 490px) {
     .flex-column {
