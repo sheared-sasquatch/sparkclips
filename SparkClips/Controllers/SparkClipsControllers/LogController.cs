@@ -22,6 +22,8 @@ namespace SparkClips.Controllers
         private ILogRepository _logRepository;
         private ApplicationDbContext _sparkClipsContext;
 
+        private string ANON_REDIRECT_URL = "/Account/Register";
+
         public LogController(ApplicationDbContext sparkClipsContext, IFileStorage fileStorage, ILogRepository logRepository, UserManager<ApplicationUser> userManager)
         {
             _sparkClipsContext = sparkClipsContext;
@@ -33,7 +35,12 @@ namespace SparkClips.Controllers
         // GET: /Log/
         public async Task<IActionResult> Index()
         {
+            ApplicationUser currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) {
+                return Redirect(ANON_REDIRECT_URL);
+            }
             IEnumerable<LogEntry> logEntries = await _logRepository.GetLogEntries();
+            logEntries = logEntries.Where(logEntry => logEntry.ApplicationUser == currentUser);
 
             foreach (LogEntry logEntry in logEntries)
             {
@@ -46,16 +53,24 @@ namespace SparkClips.Controllers
         // GET: /Log/Detail
         public async Task<IActionResult> Detail(int ID)
         {
+           ApplicationUser currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) {
+                return Redirect(ANON_REDIRECT_URL);
+            }
             LogEntry logEntry = await _logRepository.GetLogEntryByID(ID);
-            if (logEntry == null)
+            if (logEntry == null || currentUser != logEntry.ApplicationUser )
             {
                 return NotFound();
             }
             return View(logEntry);
         }
 
-        public IActionResult Entry()
+        public async Task<IActionResult> Entry()
         {
+           ApplicationUser currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) {
+                return Redirect(ANON_REDIRECT_URL);
+            }
             return View();
         }
 
@@ -71,6 +86,11 @@ namespace SparkClips.Controllers
         [HttpPost]
         public async Task<IActionResult> ProcessEntry(List<IFormFile> files, LogEntry logEntry)
         {
+           ApplicationUser currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) {
+                return Redirect(ANON_REDIRECT_URL);
+            }
+
             long size = files.Sum(f => f.Length);
             logEntry.ApplicationUser = await _userManager.GetUserAsync(User);
             _sparkClipsContext.LogEntries.Add(logEntry);
@@ -97,7 +117,6 @@ namespace SparkClips.Controllers
             // Don't rely on or trust the FileName property without validation.
 
             return RedirectToAction("Index");
-            return Ok(new { count = files.Count, size });
         }
     }
 }
