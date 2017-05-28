@@ -122,11 +122,12 @@ namespace SparkClips.Models.HairyDatabase
     {
         public int LogEntryID { get; set; }
         public string Description { get; set; }
+        
         [DataType(DataType.Currency)]
         public decimal? Cost { get; set; } // make decimal a nullable type so that ef core doesn't make it required by convention
         [Display(Name = "Haircut Date")]
         [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public DateTime DateTimeCreated { get; set; } // Gets auto set on first save
         public string Location { get; set; }
         public string Barbers { get; set; }

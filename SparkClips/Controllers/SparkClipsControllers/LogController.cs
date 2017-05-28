@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SparkClips.Models;
+using System;
 
 namespace SparkClips.Controllers
 {
@@ -93,6 +94,10 @@ namespace SparkClips.Controllers
 
             long size = files.Sum(f => f.Length);
             logEntry.ApplicationUser = await _userManager.GetUserAsync(User);
+            if (logEntry.DateTimeCreated.Year == 1) {
+                logEntry.DateTimeCreated = DateTime.Now;
+            }
+
             _sparkClipsContext.LogEntries.Add(logEntry);
             _sparkClipsContext.SaveChanges();
 
