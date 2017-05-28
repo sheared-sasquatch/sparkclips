@@ -7,8 +7,8 @@
             var req = new XMLHttpRequest();
             req.open("POST", "api/GalleryEntry_ApplicationUserApi/");
             req.setRequestHeader("Content-Type", "application/json");
-            req.onload = function () { console.log("lol") };
-            req.onerror = function () { console.log("naw") };
+            req.onload = function () { console.log("lol"); location.reload(); };
+            req.onerror = function () { console.log("naw"); location.reload(); };
             var json = { "GalleryEntryID": parseInt(this.id), "ApplicationUserId": 1 };
             req.send(JSON.stringify(json));
         }
