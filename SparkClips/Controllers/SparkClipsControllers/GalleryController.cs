@@ -38,7 +38,10 @@ namespace SparkClips.Controllers
                 galleryEntry.Likes = await _galleryRepository.ComputeNLikes(galleryEntry);
                 // Boolean has the picture been favorited by this user already
                 var user = await _userManager.GetUserAsync(User);
-                galleryEntry.Faved = _galleryRepository.isFavorited(galleryEntry.GalleryEntryID, user.Id);
+                if(user != null) {
+                    galleryEntry.Faved = _galleryRepository.isFavorited(galleryEntry.GalleryEntryID, user.Id);
+                }
+                
             }
             galleryEntries = galleryEntries.OrderByDescending(galleryEntry => galleryEntry.Likes);
             return View(galleryEntries);
