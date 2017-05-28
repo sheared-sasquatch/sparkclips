@@ -58,9 +58,12 @@ h2{
     margin-left: 15px;
 }
 
+<<<<<<< HEAD
+=======
 img {
     width: 100%;
 }
+>>>>>>> 6f3965b7d092cb27a28a30e9898ec13ecf5bea1c
 .row {
     margin-left: 0;
     margin-right: 0;
@@ -93,6 +96,9 @@ img {
     }    
 }
 @media (max-width: 2000px) {
+    .navbar-toggle {
+        margin-right: 15px;
+    }
     .navbar-header {
         float: none;
     }
@@ -128,3 +134,4 @@ img {
         display:block !important;
     }
 }
+
