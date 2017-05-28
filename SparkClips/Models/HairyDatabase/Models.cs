@@ -68,6 +68,9 @@ namespace SparkClips.Models.HairyDatabase
 
         [NotMapped]
         public Boolean Faved { get; set; }
+
+        [NotMapped]
+        public Boolean Filter { get; set; }
     }
 
     /// <summary>

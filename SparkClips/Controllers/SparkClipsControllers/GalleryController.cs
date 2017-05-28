@@ -30,8 +30,8 @@ namespace SparkClips.Controllers
         public async Task<IActionResult> Index(List<int> tags)
         {
             IEnumerable<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries();
-            galleryEntries = galleryEntries.Where(galleryEntry => 
-                tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag)));
+            //galleryEntries = galleryEntries.Where(galleryEntry => 
+            //    tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag)));
 
             ApplicationUser user = await _userManager.GetUserAsync(User);
 
@@ -47,7 +47,15 @@ namespace SparkClips.Controllers
                 if(user != null) {
                     galleryEntry.Faved = _galleryRepository.isFavorited(galleryEntry.GalleryEntryID, user.Id);
                 }
+                if (tags.Count > 0)
+                {
+                    galleryEntry.Filter = tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag));
+                } else
+                {
+                    galleryEntry.Filter = false;
+                }
                 
+
             }
             galleryEntries = galleryEntries.OrderByDescending(galleryEntry => galleryEntry.Likes);
 
