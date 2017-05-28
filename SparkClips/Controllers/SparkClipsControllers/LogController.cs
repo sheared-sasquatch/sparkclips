@@ -23,7 +23,7 @@ namespace SparkClips.Controllers
         private ILogRepository _logRepository;
         private ApplicationDbContext _sparkClipsContext;
 
-        private string ANON_REDIRECT_URL = "/Account/Register";
+        private string ANON_REDIRECT_URL = "/Account/Login";
 
         public LogController(ApplicationDbContext sparkClipsContext, IFileStorage fileStorage, ILogRepository logRepository, UserManager<ApplicationUser> userManager)
         {
