@@ -59,7 +59,8 @@ namespace SparkClips.Controllers
 
             // pass list of tuples to the ViewData for the View to use
             ViewData["tags"] = tupled_database_tags;
-            ViewData["logged_in"] = user != null;
+            bool logged_in = user != null;
+            ViewData["logged_in"] = logged_in;
 
             return View(galleryEntries);
         }
