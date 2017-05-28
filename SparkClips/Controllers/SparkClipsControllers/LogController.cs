@@ -37,6 +37,23 @@ namespace SparkClips.Controllers
             return View(logEntries);
         }
 
+        // GET: /Log/Detail
+        public async Task<IActionResult> Detail(int ID)
+        {
+            LogEntry logEntry = await _logRepository.GetLogEntryByID(ID);
+            if (logEntry == null)
+            {
+                return NotFound();
+            }
+            return View(logEntry);
+        }
+
+        public IActionResult Entry()
+        {
+            return View();
+        }
+
+
         /// <summary>
         /// Receive one or more files from the user's POST request
         /// and upload them to blob storage
@@ -46,7 +63,7 @@ namespace SparkClips.Controllers
         /// <returns>A JSON object which gives some useless data about the files uploaded.
         /// This should probably become a redirect at some point.</returns>
         [HttpPost]
-        public async Task<IActionResult> UploadImage(List<IFormFile> files)
+        public async Task<IActionResult> ProcessEntry(List<IFormFile> files, LogEntryViewModel logEntryViewModel)
         {
             long size = files.Sum(f => f.Length);
 
@@ -67,22 +84,6 @@ namespace SparkClips.Controllers
             // Don't rely on or trust the FileName property without validation.
 
             return Ok(new { count = files.Count, size });
-        }
-
-        // GET: /Log/Detail
-        public async Task<IActionResult> Detail(int ID)
-        {
-            LogEntry logEntry = await _logRepository.GetLogEntryByID(ID);
-            if (logEntry == null)
-            {
-                return NotFound();
-            }
-            return View(logEntry);
-        }
-
-        public IActionResult Entry()
-        {
-            return View();
         }
     }
 }
