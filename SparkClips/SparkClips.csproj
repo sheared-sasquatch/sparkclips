@@ -12,7 +12,6 @@
     <Content Remove="wwwroot\js\gallery.js" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="wwwroot\css\gallery-detail.css" />
     <Content Include="wwwroot\gallery.js" />
   </ItemGroup>
   <ItemGroup>
