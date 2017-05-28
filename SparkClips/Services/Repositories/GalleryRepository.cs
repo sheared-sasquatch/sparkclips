@@ -79,7 +79,8 @@ namespace SparkClips.Services.Repositories
             if (galleryEntry.Images.Count() == 0)
             {
                 // if this gallery entry has no images defined, return a random stock photo
-                return "https://unsplash.it/g/200/300/?random";
+                return "/images/no-image.png";
+                // return "https://unsplash.it/g/200/300/?random";
             }
             else
             {
