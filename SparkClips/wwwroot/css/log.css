@@ -97,7 +97,7 @@ img {
 }
 @media (max-width: 2000px) {
     .navbar-toggle {
-        margin-right: 30px;
+        margin-right: 15px;
     }
     .navbar-header {
         float: none;
