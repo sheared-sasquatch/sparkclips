@@ -107,17 +107,20 @@ namespace SparkClips.Controllers.ModelControllers
         public async Task<IActionResult> Edit(int id, [Bind("LogEntryID,Description,Cost,DateTimeCreated,Location,Barbers,ApplicationUserID")] LogEntry logEntry)
         {
             ApplicationUser currentUser = await _userManager.GetUserAsync(User);
-            if (id != logEntry.LogEntryID || currentUser == null || currentUser.Id != logEntry.ApplicationUserID)
-            {
-                return NotFound();
-            }
+            logEntry.ApplicationUserID = currentUser.Id;
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     _context.Update(logEntry);
+                    //if (id != logEntry.LogEntryID || currentUser == null || currentUser.Id != logEntry.ApplicationUserID)
+                    //{
+                    //    return NotFound();
+                    //}
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -130,7 +133,8 @@ namespace SparkClips.Controllers.ModelControllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return Redirect("/Log");
+                //return RedirectToAction("Index");
             }
             ViewData["ApplicationUserID"] = new SelectList(_context.ApplicationUsers, "Id", "Id", logEntry.ApplicationUserID);
             return View(logEntry);
@@ -174,7 +178,8 @@ namespace SparkClips.Controllers.ModelControllers
 
             _context.LogEntries.Remove(logEntry);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return Redirect("/Log");
+            //return RedirectToAction("Index");
         }
 
         private bool LogEntryExists(int id)

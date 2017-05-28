@@ -27,9 +27,11 @@
                 <div class="flex-column card" style="width: 20rem;">
                    <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="@Html.DisplayFor(model => item.DateTimeCreated)">
                     <div class="card-block">
-                        <h4 class="card-title">@Html.DisplayFor(model => item.Location)@Html.DisplayFor(model => item.Barbers)@Html.DisplayFor(model => item.Cost)</h4>
-                        <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
+                        <h4 class="card-title">@Html.DisplayFor(model => item.DateTimeCreated)</h4>
+                        @*<p class="card-text">@Html.DisplayFor(model => item.Cost)</p>*@
                         <a asp-action="Detail" asp-route-id="@item.LogEntryID" class="btn btn-primary">Details</a>
+                        <a asp-controller="EditLogEntries" asp-action="Edit" asp-route-id="@item.LogEntryID" class="btn btn-primary">Edit</a>
+                        <a asp-controller="EditLogEntries" asp-action="Delete" asp-route-id="@item.LogEntryID" class="btn btn-primary">Delete</a>
                     </div>
                 </div>
             } 
