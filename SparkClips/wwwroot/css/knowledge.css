@@ -2,7 +2,11 @@ h2{
     display:none;
 }
 h3{
-    font-size: 33px;
+    font-size: 3em;
+}
+
+.subsection {
+    font-size: 1em;
 }
 #menu:hover{
     background-color: white !important;

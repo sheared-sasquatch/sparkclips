@@ -81,6 +81,7 @@ namespace SparkClips
             services.AddTransient<IFileStorage, FileStorage>();
             services.AddTransient<IGalleryRepository, GalleryRepository>();
             services.AddTransient<ILogRepository, LogRepository>();
+            services.AddTransient<ITagRepository, TagRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

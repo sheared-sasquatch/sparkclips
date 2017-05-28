@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SparkClips.Models.HairyDatabase;
 using SparkClips.Services.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,17 +16,20 @@ namespace SparkClips.Controllers
     public class GalleryController : Controller
     {
         private IGalleryRepository _galleryRepository;
+        private ITagRepository _tagRepository;
         private readonly UserManager<ApplicationUser> _userManager;
-        public GalleryController(IGalleryRepository galleryRepository, UserManager<ApplicationUser> userManager)
+
+        public GalleryController(IGalleryRepository galleryRepository, UserManager<ApplicationUser> userManager, ITagRepository tagRepository)
         {
             _galleryRepository = galleryRepository;
             _userManager = userManager;
+            _tagRepository = tagRepository;
         }
 
         // GET: /Gallery/
         public async Task<IActionResult> Index(List<int> tags)
         {
-            IEnumerable<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries(tags);
+            IEnumerable<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries();
             galleryEntries = galleryEntries.Where(galleryEntry => 
                 tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag)));
 
@@ -44,6 +48,16 @@ namespace SparkClips.Controllers
                 
             }
             galleryEntries = galleryEntries.OrderByDescending(galleryEntry => galleryEntry.Likes);
+
+            // fetch tags from the database
+            IEnumerable<Tag> database_tags = await _tagRepository.GetTags();
+            // Transform list of tags into a list of tuples with the id, name, and bool to see if it should be checked
+            IEnumerable<Tuple<int, string, bool>> tupled_database_tags = database_tags
+                .Select(tag => Tuple.Create(tag.TagID, tag.Name, tags.Contains(tag.TagID)));
+
+            // pass list of tuples to the ViewData for the View to use
+            ViewData["tags"] = tupled_database_tags;
+
             return View(galleryEntries);
         }
 
