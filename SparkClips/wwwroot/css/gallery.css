@@ -1,6 +1,14 @@
 h2{
-    display:none;
+    margin-bottom: 1em;
 }
+<<<<<<< HEAD
+=======
+
+h3 {
+    margin-left: 15px;
+}
+
+>>>>>>> 6f3965b7d092cb27a28a30e9898ec13ecf5bea1c
 .flex-row {
     display: flex;
     flex-wrap: wrap; /* wrap columns to next line if needed */
