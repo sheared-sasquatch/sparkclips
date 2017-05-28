@@ -6,7 +6,7 @@ namespace SparkClips.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return Redirect("/gallery");
         }
 
         public IActionResult Knowledge()
