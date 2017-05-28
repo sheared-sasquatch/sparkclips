@@ -33,6 +33,8 @@ namespace SparkClips.Controllers
             galleryEntries = galleryEntries.Where(galleryEntry => 
                 tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag)));
 
+            ApplicationUser user = await _userManager.GetUserAsync(User);
+
             // loop over each gallery entry and add any computed fields
             foreach (GalleryEntry galleryEntry in galleryEntries)
             {
@@ -41,7 +43,7 @@ namespace SparkClips.Controllers
                 // seting the gallery entry number of likes
                 galleryEntry.Likes = await _galleryRepository.ComputeNLikes(galleryEntry);
                 // Boolean has the picture been favorited by this user already
-                var user = await _userManager.GetUserAsync(User);
+                
                 if(user != null) {
                     galleryEntry.Faved = _galleryRepository.isFavorited(galleryEntry.GalleryEntryID, user.Id);
                 }
@@ -57,6 +59,7 @@ namespace SparkClips.Controllers
 
             // pass list of tuples to the ViewData for the View to use
             ViewData["tags"] = tupled_database_tags;
+            ViewData["logged_in"] = user != null;
 
             return View(galleryEntries);
         }
