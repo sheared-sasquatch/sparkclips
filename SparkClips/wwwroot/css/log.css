@@ -58,12 +58,16 @@ h2{
     margin-left: 15px;
 }
 
-.container {
-    
+img {
+    width: 100%;
 }
 .row {
     margin-left: 0;
     margin-right: 0;
+}
+.dl-horizontal {
+    padding-left: 15px;
+    font-size: 1.74em;
 }
 
 /* rules for screens 480px and wider */
