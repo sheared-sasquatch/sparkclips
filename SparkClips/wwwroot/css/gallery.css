@@ -26,8 +26,13 @@ h2{
     padding-left: 50px;
     padding-top: 20px;
 }
-.alreadyFaved{
+.notFaved{
     background-color: darkgray;
+    border-color: darkgray;
+}
+.alreadyFaved{
+    background-color: #337ab7;
+    border-color: #337ab7;
 }
 
 /* rules for screens 480px and wider */
