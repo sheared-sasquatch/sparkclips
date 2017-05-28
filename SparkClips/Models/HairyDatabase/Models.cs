@@ -122,9 +122,9 @@ namespace SparkClips.Models.HairyDatabase
     {
         public int LogEntryID { get; set; }
         public string Description { get; set; }
-        
+
         [DataType(DataType.Currency)]
-        public decimal? Cost { get; set; } // make decimal a nullable type so that ef core doesn't make it required by convention
+        public string Cost { get; set; } // make decimal a nullable type so that ef core doesn't make it required by convention
         [Display(Name = "Haircut Date")]
         [DataType(DataType.Date)]
 
