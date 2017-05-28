@@ -57,7 +57,7 @@
                 @foreach (var item in Model)
                 {
                     @if(item.Faved) {
-                        <div class="flex-column card" style="width: 20rem;">
+                        <div class="flex-column card">
                             <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="@Html.DisplayFor(model => item.Title)">
                             <div class="card-block">
                                 <h4 class="card-title">@Html.DisplayFor(model => item.Title) (@Html.DisplayFor(model => item.Likes) likes)</h4>
