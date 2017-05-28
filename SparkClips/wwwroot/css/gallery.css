@@ -1,6 +1,7 @@
 h2{
-    display:none;
+    margin-bottom: 1em;
 }
+
 .flex-row {
     display: flex;
     flex-wrap: wrap; /* wrap columns to next line if needed */
