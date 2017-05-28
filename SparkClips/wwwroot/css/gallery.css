@@ -1,9 +1,6 @@
 h2{
     display:none;
 }
-h3 {
-    margin-left: 15px;
-}
 .flex-row {
     display: flex;
     flex-wrap: wrap; /* wrap columns to next line if needed */
@@ -15,7 +12,7 @@ h3 {
     padding-bottom: 50px;
 }
 .card-img-top{
-    width: 100vw;
+    width: 100%;
     object-fit: cover;
     height: 280px;
 }
@@ -42,13 +39,6 @@ h3 {
 .card-block {
     padding-left: 15px;
 }
-#galleryView {
-    width: 100%;
-}
-#favoriteView .col-md-12 {
-    padding-right: 0;
-    padding-left: 0;
-}
 
 /* rules for screens 480px and wider */
 @media (min-width: 490px) {
@@ -62,7 +52,6 @@ h3 {
     .filters{
         display:none;
     }
-
 }
 /* rules for screens 991px and wider */
 
@@ -121,4 +110,8 @@ h3 {
     .collapse.in{
         display:block !important;
     }
+}
+
+.navbar-toggle {
+    margin-right: -15px;
 }
