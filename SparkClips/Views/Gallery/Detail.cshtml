@@ -11,7 +11,7 @@
 
 @foreach (var image in Model.Images)
 {
-    <img class="container" src="@Html.DisplayFor(x =>image.Image.Url)" />
+    <img src="@Html.DisplayFor(x =>image.Image.Url)" />
 }
 
 
@@ -21,9 +21,9 @@
         Characteristics
     </dt>
     <dd>
-        <ul>
+        <div id="chars">
         @foreach(var GalleryEntry_Tag in Model.Tags) {
-            <li>(@GalleryEntry_Tag.Tag.Name)</li>
+            <div class="tag">(@GalleryEntry_Tag.Tag.Name)</div>
         }
         </ul>
     </dd>

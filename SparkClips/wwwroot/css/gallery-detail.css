@@ -1,3 +1,25 @@
+body {
+   margin: 0;
+   padding: 0;
+}
+
 img {
    width: 100%;
+}
+
+.dl-horizontal {
+   padding-left: 15px;
+}
+
+dt {
+   font-size: 14pt;
+   font-family: helvetica, arial, sans-serif;
+}
+
+.tag {
+   margin: 3px;
+   padding: 3px;
+   border: 1px solid grey;
+   display:inline;
+   border-radius: 5px;
 }

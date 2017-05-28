@@ -13,7 +13,6 @@ h2{
 }
 .card-img-top{
     width: 100%;
-    max-width: 315px;
     object-fit: cover;
     height: 280px;
 }
@@ -34,7 +33,12 @@ h2{
     background-color: #337ab7;
     border-color: #337ab7;
 }
-
+.navbar-header {
+    width: 100%;
+}
+.card-block {
+    padding-left: 15px;
+}
 /* rules for screens 480px and wider */
 @media (min-width: 490px) {
     .flex-column {
