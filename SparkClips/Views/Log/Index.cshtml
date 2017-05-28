@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SparkClips.Models.HairyDatabase.LogEntry>
+@{
+    ViewData["Title"] = "Log";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/log.css" />
+}
+
+<h2>@ViewData["Title"].</h2>
+
+
+<div class="row">
+    <div class="col-md-10">
+        <h3 class="pageTitle">Log</h3>
+
+            <div>
+                <a asp-action="Entry" class="btn btn-primary">Add a New Entry</a>
+            </div>
+
+        <div class="flex-row">
+
+
+
+             @foreach (var item in Model)
+            {
+                <div class="flex-column card" style="width: 20rem;">
+                   <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="@Html.DisplayFor(model => item.DateTimeCreated)">
+                    <div class="card-block">
+                        <h4 class="card-title">@Html.DisplayFor(model => item.Location)@Html.DisplayFor(model => item.Barbers)@Html.DisplayFor(model => item.Cost)</h4>
+                        <p class="card-text">@Html.DisplayFor(model => item.Description)</p>
+                        <a asp-action="Detail" asp-route-id="@item.LogEntryID" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            } 
+        </div>
+    </div>
+</div>
+
+
