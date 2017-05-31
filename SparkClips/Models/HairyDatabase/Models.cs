@@ -150,6 +150,12 @@ namespace SparkClips.Models.HairyDatabase
         {
             return Description;
         }
+
+        public string AbsoluteUrl {
+            get {
+                return "/Log/Detail/" + LogEntryID;
+            }
+        }
     }
 
     /// <summary>

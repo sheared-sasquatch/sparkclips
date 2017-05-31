@@ -133,7 +133,7 @@ namespace SparkClips.Controllers.ModelControllers
                         throw;
                     }
                 }
-                return Redirect("/Log");
+                return Redirect(logEntry.AbsoluteUrl);
                 //return RedirectToAction("Index");
             }
             ViewData["ApplicationUserID"] = new SelectList(_context.ApplicationUsers, "Id", "Id", logEntry.ApplicationUserID);
@@ -178,7 +178,7 @@ namespace SparkClips.Controllers.ModelControllers
 
             _context.LogEntries.Remove(logEntry);
             await _context.SaveChangesAsync();
-            return Redirect("/Log");
+            return Redirect(logEntry.AbsoluteUrl);
             //return RedirectToAction("Index");
         }
 
