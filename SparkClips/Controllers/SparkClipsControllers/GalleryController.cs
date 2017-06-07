@@ -30,8 +30,8 @@ namespace SparkClips.Controllers
         public async Task<IActionResult> Index(List<int> tags)
         {
             IEnumerable<GalleryEntry> galleryEntries = await _galleryRepository.GetGalleryEntries();
-            //galleryEntries = galleryEntries.Where(galleryEntry => 
-            //    tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag)));
+            galleryEntries = galleryEntries.Where(galleryEntry =>
+                tags.All(tag => galleryEntry.Tags.Select(t => t.TagID).Contains(tag)));
 
             ApplicationUser user = await _userManager.GetUserAsync(User);
 
