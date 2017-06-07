@@ -29,7 +29,7 @@
 
                 @foreach (var item in Model)
                 {
-                    @if (!item.Filter)
+                    @if (!item.Filter || true)
                     {
                         <div class="flex-column card" style="width: 20rem;">
                             <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="@Html.DisplayFor(model => item.Title)">
@@ -84,7 +84,7 @@
     <h3 class="pageTitle">@ViewData["Title"]</h3>
                 @foreach (var item in Model)
                 {
-                    @if (!item.Filter)
+                    @if (!item.Filter || true)
                     {
                         <div class="flex-column card" style="width: 20rem;">
                             <img class="card-img-top" src="@Html.DisplayFor(x => item.Thumbnail)" alt="@Html.DisplayFor(model => item.Title)">
