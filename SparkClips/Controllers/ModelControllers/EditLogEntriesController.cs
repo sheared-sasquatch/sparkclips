@@ -178,7 +178,7 @@ namespace SparkClips.Controllers.ModelControllers
 
             _context.LogEntries.Remove(logEntry);
             await _context.SaveChangesAsync();
-            return Redirect(logEntry.AbsoluteUrl);
+            return Redirect("/Log");
             //return RedirectToAction("Index");
         }
 
